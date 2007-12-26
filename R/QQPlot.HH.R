@@ -15,7 +15,7 @@ function()
             }
         dist <- tclvalue(distVariable)
         save <- options(warn=-1)
-        on.exit(options=save)
+        on.exit(options(save))
         retryMe <- function(msg) {
             Message(message= msg, type="error")
             QQPlot.HH()

@@ -64,7 +64,7 @@ plot.summary_HH_regsubsets <-
          ylab = paste("Statistic:", statistic), las=par("las"),
          ..., cex=cex, main=statistic, col=col, pch=pch,
          xlim=range(x$p)+c(-.4,.4))
-    if (statistic == "cp") abline(a=1, b=1, col.abline=col.abline)
+    if (statistic == "cp") abline(a=1, b=1, col=col.abline)
     
     for (i in seq(along = stat)) {
       adj <- if (x$p[i] == min.size) 

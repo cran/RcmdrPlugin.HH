@@ -97,7 +97,7 @@ normalHypothesesPlot <- function(){
 
       ## Observed Value
       if (!is.na(obsValue)) {
-        command <- paste("norm.observed(", obsValue, ")", sep="")
+        command <- paste("norm.observed(", obsValue, ", ", "(", obsValue, "-", mu, ")/", se, ")", sep="")
         doItAndPrint(command)
       }
 
