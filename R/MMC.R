@@ -63,7 +63,7 @@ MMCmenu <- function() {
       eval(parse(text=("ry <- mean(y.range) + (y.range - mean(y.range))*(-2*x.left+x.offset)/(-2*x.left)*1.1")))
 
       command3 <- paste("plot(", model, ".mmc, x.offset=",
-                        x.offset, ", ry=", deparse(ry), ")", sep="")
+                        x.offset, ",\n     ry=", deparse(ry), ")", sep="")
       doItAndPrint(command3)
 
       if (tclvalue(tieVariable)=="1") {

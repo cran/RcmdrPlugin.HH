@@ -26,4 +26,7 @@
     item    toolsMenu       command         "Large Font for Projectors (HH)"               Projector                   ""              "" ##HH
     item    toolsMenu       command         "R options (HH)"               R_options                   ""              "" ##HH
     item    graphsMenu      command         "Scatterplot.HH... (HH)"                                scatterPlot.HH                 "numericP(2)" "packageAvailable('car')"
+    item    graphsMenu      command         "Squared Residuals... (HH)"                                Regr1Plot                 "numericP(2)" "packageAvailable('graphics')"
     item    modelsGraphsMenu      command         "MMC Plot... (HH)"                       MMCmenu                "AOVModelsP()" "" ##HH
+    item    exitMenu        command         "From Commander and restart Commander"                     CloseCommanderRestart              ""          ""
+    item    exitMenu        command         "From Commander and restart Commander, no questions"      CloseCommanderNoQuestionRestart              ""          ""

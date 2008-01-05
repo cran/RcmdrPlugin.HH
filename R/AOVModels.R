@@ -1,7 +1,7 @@
 listAOVModels <-
-function (envir = .GlobalEnv, ...) 
+function (envir = .GlobalEnv, all.names=TRUE, ...) 
 {
-  objects <- ls(envir = envir, ...)
+  objects <- ls(envir = envir, all.names=all.names, ...)
   if (length(objects) == 0) 
     NULL
   else {

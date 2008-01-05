@@ -1,9 +1,9 @@
 \name{scatterPlot.HH}
 \alias{scatterPlot.HH}
-\title{scatterplot menu with different defaults}
+\title{Scatterplot menu with different defaults than Rcmdr.}
 \description{Alternate menu into the scatterplot in the car package.
-  This menu by default uses solid dots and turns off marginal boxplots
-  and smoother lines.  Otherwise it is identical to the Rcmdr menu
+  This menu by default uses solid dots, larger fonts, and turns off marginal boxplots
+  and smoother lines.  Otherwise it is identical to the Rcmdr Scatterplot menu
   item.}
 
 \usage{

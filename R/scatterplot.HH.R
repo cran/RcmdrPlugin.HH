@@ -35,9 +35,9 @@ scatterPlot.HH <- function(){
     parFrame <- tkframe(top) 
     pchVar <- tclVar(gettextRcmdr("<auto>"))
     pchEntry <- tkentry(parFrame, width=25, textvariable=pchVar)      
-    cexValue <- tclVar("1")
-    cex.axisValue <- tclVar("1")
-    cex.labValue <- tclVar("1")    
+    cexValue <- tclVar("1.3")
+    cex.axisValue <- tclVar("1.3")
+    cex.labValue <- tclVar("1.3")    
     cexSlider <- tkscale(parFrame, from=0.5, to=2.5, showvalue=TRUE, variable=cexValue,
         resolution=0.1, orient="horizontal")
     cex.axisSlider <- tkscale(parFrame, from=0.5, to=2.5, showvalue=TRUE, variable=cex.axisValue,
