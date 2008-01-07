@@ -18,7 +18,7 @@ function(){
         for (j in seq(length.out=ncols)) {
             col.varname <- colsNames[j] ## paste(".colname.", j, sep="")
             assign(col.varname, tclVar(colsNames[j]), envir=env)
-            make.col.names <- paste(make.col.names, ", ", "tkentry(.tableFrame, width='5', textvariable=", 
+            make.col.names <- paste(make.col.names, ", ", "tkentry(.tableFrame, width='12', textvariable=", 
                     col.varname, ")", sep="")
             }
         if (ncols > 0) {
@@ -28,15 +28,15 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
             assign(varname, tclVar("") , envir=env)
             row.varname <- paste(".rowname.", i, sep="")
             assign(row.varname, tclVar(i), envir=env)
-            make.row <- paste("tkentry(.tableFrame, width='5', textvariable=",
+            make.row <- paste("tkentry(.tableFrame, width='12', textvariable=",
                 row.varname, ")", sep="")
-            make.row <- paste(make.row, ", ", "tkentry(.tableFrame, width='5', textvariable=", 
+            make.row <- paste(make.row, ", ", "tkentry(.tableFrame, width='12', textvariable=", 
                 varname, ")", sep="")
             if (ncols > 1)
             for (j in 2:ncols) {
                 varname <- paste(".tab.", i, ".", j, sep="")
                 assign(varname, tclVar(""), envir=env)
-                make.row <- paste(make.row, ", ", "tkentry(.tableFrame, width='5', textvariable=", 
+                make.row <- paste(make.row, ", ", "tkentry(.tableFrame, width='12', textvariable=", 
                     varname, ")", sep="")
 ## recover()
                 }
@@ -89,35 +89,36 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
             errorCondition(recall=PredictModel, message=gettextRcmdr("Column names are not unique."))
             return()
             }     
-        closeDialog()
+    closeDialog()
 
     confLevel <- as.numeric(tclvalue(confLevelVar))
-    
-        command <- paste("data.frame(matrix(c(", paste(newdata, collapse=","), "), ", nrows, ", ", ncols,
-            ", byrow=TRUE))", sep="")
-        assign(".NewData", justDoIt(command), envir=.GlobalEnv)
-        logger(paste(".NewData <- ", command, sep=""))
-        command <- paste("c(",paste(paste("'", row.names, "'", sep=""), collapse=", "), ")", sep="")
-        justDoIt(paste("rownames(.NewData) <- ", command, sep=""))
-        logger(paste("rownames(.NewData) <- ", command, sep=""))
-        command <- paste("c(",paste(paste("'", col.names, "'", sep=""), collapse=", "), ")", sep="")
-        justDoIt(paste("colnames(.NewData) <- ", command, sep=""))
-        logger(paste("colnames(.NewData) <- ", command, sep=""))
-        doItAndPrint(".NewData  # Newdata")
-        command <- paste('predict(',
-                         .active.model,
-                         ', newdata=.NewData, interval="',
-                         tclvalue(predictVariable),
-                         '", level=', tclvalue(confLevelVar),
-                         ', se.fit=', ("1"==tclvalue(seVariable)) ,
-                         ')', sep="")
-        doItAndPrint(command)
-        ## logger("remove(.NewData)") 
-        ## remove(.NewData, envir=.GlobalEnv)                                                      
-        tkfocus(CommanderWindow())
-        }
-    OKCancelHelp(helpSubject="predict")
 
+    dim(newdata) <- c(ncols, nrows) ## reversed!
+    newdata <- t(newdata)           ## restored
+    j <- 1
+    command <- paste(".NewData <- data.frame(", col.names[j], "=", deparse(newdata[,j]), sep="")
+    if (ncols > 1)
+      for (j in 2:ncols) {
+        command <- paste(command, ", ", col.names[j], "=", deparse(newdata[,j]), sep="")
+      }
+    command <- paste(command, ", row.names=", deparse(row.names),")", sep="")
+    doItAndPrint(command)
+    doItAndPrint(".NewData  # Newdata")
+
+    command <- paste('predict(',
+                     .active.model,
+                     ', newdata=.NewData, interval="',
+                     tclvalue(predictVariable),
+                     '", level=', tclvalue(confLevelVar),
+                     ', se.fit=', ("1"==tclvalue(seVariable)) ,
+                     ')', sep="")
+    doItAndPrint(command)
+    ## logger("remove(.NewData)") 
+    ## remove(.NewData, envir=.GlobalEnv)                                                      
+    tkfocus(CommanderWindow())
+  }
+
+    OKCancelHelp(helpSubject="predict")
     
     radioButtons(name="predict",
                  buttons=c("none",

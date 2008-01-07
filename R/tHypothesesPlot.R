@@ -77,6 +77,7 @@ tHypothesesPlot <- function(){
       critical <- c(criticalLow, criticalHigh)
       critical <- critical[!is.na(critical)]
       critical <- qt(critical, degfree)
+      critical.numbers <- critical
       shade <- "right"
       
       if (length(critical)==2) {
@@ -102,6 +103,7 @@ tHypothesesPlot <- function(){
                          command.critical,
                          ", shade='", "left",
                          "', col='red', axis.name='", axis.name, "1'",
+                         ", axis.name.expr=expression(", axis.name, "[1])",
                          sep="")
         if (!(is.na(degfree) || degfree==Inf))
           command <- paste(command, ", df=", degfree, sep="")
@@ -114,7 +116,7 @@ tHypothesesPlot <- function(){
                        command.se,
                        command.critical,
                        ", shade='", shade,
-                       "', col='black', axis.name='", axis.name, "'",
+                       "', col='blue', axis.name='", axis.name, "'",
                        sep="")
       if (!is.na(degfree))
         command <- paste(command, ", df=", degfree, sep="")
@@ -123,8 +125,32 @@ tHypothesesPlot <- function(){
 
       ## Observed Value
       if (!is.na(obsValue)) {
+        
+        z.value <- (obsValue-mu)/(sigma/sqrt(n))
+        p.value <- 1-pt(z.value, df=degfree)
+
+        if (length(critical.numbers) > 0) { ## right
+          command <- paste("norm.outline('dt',", obsValue, ",",
+                           par()$usr[2], ",",
+                           mu, ",", se,
+                           ", deg.free=", degfree, ")")
+        doItAndPrint(command)
+        }
+        if (length(critical.numbers) == 2) { ## left also
+          obs.mean.x.neg <- mu-(obsValue-mu)
+          command <- paste("norm.outline('dt',", par()$usr[1],",",
+                           obs.mean.x.neg, ",",
+                           mu, ",", se,
+                           ", deg.free=", degfree, ")")
+          doItAndPrint(command)
+          p.value <- 2*p.value
+        }
+
         obs.T <- paste("round((", obsValue, " - ", mu, ")/(",  sigma, "/sqrt(", n, ")", "), 3)")
-        command <- paste("norm.observed(", obsValue, ", ", obs.T, ")", sep="")
+        command <- paste("norm.observed(", obsValue, ", ", obs.T,
+                         if (!is.na(muAlt)) paste(",", (obsValue-muAlt)/se)
+                         else NULL,
+                         ", p.val=", p.value, ")", sep="")
         doItAndPrint(command)
       }
 
@@ -155,3 +181,5 @@ tHypothesesPlot <- function(){
     tkgrid.configure(ymaxEntry, sticky="w")
     dialogSuffix(rows=8, columns=1, focus=muEntry)
     }
+
+## source("~/HH-R.package/RcmdrPlugin.HH/R/tHypothesesPlot.R")

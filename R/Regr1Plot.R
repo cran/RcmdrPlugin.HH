@@ -8,22 +8,27 @@ Regr1Plot <- function() {
     gBox <- variableListBox(variablesFrame, Factors(),
                             title=gettextRcmdr("group-variable (pick zero or one)"),
                             selectmode="single", initialSelection=-1)
-    checkBoxes(frame="optionsFrame",
-               boxes=c("", "jitterX", "useActiveModel", "", "", "points.yhat"),
-               initialValues=c(0, 0, 0, 0, 1, 1),
-               labels=gettextRcmdr(c("", "Jitter x-variable", "Use Active Model", "", "", "Display Y.hat points")))
-    radioButtons(name="residuals",
-                 buttons=c("none",
-                   "square",
-                   "line"),
-                 values=c("FALSE", "'square'", "'line'"),
+    workingFrame <- tkframe(top)
+    woFrame <- tkframe(workingFrame)
+    checkBoxes(window=woFrame,
+               frame="optionsFrame",
+               boxes=c("jitterX", "points.yhat"),
+               initialValues=c(0, 1),
+               labels=gettextRcmdr(c("Jitter x-variable", "Display Y.hat points")))
+    radioButtons(window=workingFrame,
+                 name="residuals",
+                 buttons=c("square",
+                   "line",
+                   "none"),
+                 values=c("'square'", "'line'", "FALSE"),
                  initialValue="'square'",
                  labels=gettextRcmdr(c
-                   ("point estimate only",
-                    "residuals---squares",
-                    "residuals---straight line")),
+                   ("residuals---squares",
+                    "residuals---straight line",
+                    "point estimate only")),
                  title=gettextRcmdr("Residual Display"))
-    radioButtons(name="model",
+    radioButtons(window=workingFrame,
+                 name="model",
                  buttons=c("linear", "active"),
                  values=c("0", "1"),
                  initialValue="0",
@@ -54,31 +59,45 @@ Regr1Plot <- function() {
     tkgrid(xlabFrame, tklabel(labelsFrame, text="     "), ylabFrame, sticky="w")    
     parFrame <- tkframe(top) 
 
-    xlimVar <- tclVar(gettextRcmdr("<auto>"))
-    xlimFrame <- tkframe(top)
-    xlimEntry <- tkentry(xlimFrame, width="25", textvariable=xlimVar)
-    xlimScroll <- tkscrollbar(xlimFrame, orient="horizontal",
-        repeatinterval=5, command=function(...) tkxview(xlimEntry, ...))
-    tkconfigure(xlimEntry, xscrollcommand=function(...) tkset(xlimScroll, ...))
-    tkgrid(tklabel(xlimFrame, text=gettextRcmdr("x-limits"), fg="blue"), sticky="w")
-    tkgrid(xlimEntry, sticky="w")
-    tkgrid(xlimScroll, sticky="ew")
 
-    ylimVar <- tclVar(gettextRcmdr("<auto>"))
-    ylimFrame <- tkframe(top)
-    ylimEntry <- tkentry(ylimFrame, width="25", textvariable=ylimVar)
-    ylimScroll <- tkscrollbar(ylimFrame, orient="horizontal",
-        repeatinterval=5, command=function(...) tkxview(ylimEntry, ...))
-    tkconfigure(ylimEntry, xscrollcommand=function(...) tkset(ylimScroll, ...))
-    tkgrid(tklabel(ylimFrame, text=gettextRcmdr("y-limits"), fg="blue"), sticky="w")
-    tkgrid(ylimEntry, sticky="w")
-    tkgrid(ylimScroll, sticky="ew")
-
-
+    limitsFrame <- tkframe(top)
+    xminVar <- tclVar("")
+    xminEntry <- tkentry(limitsFrame, width="6", textvariable=xminVar)
+    xmaxVar <- tclVar("")
+    xmaxEntry <- tkentry(limitsFrame, width="6", textvariable=xmaxVar)
+    yminVar <- tclVar("")
+    yminEntry <- tkentry(limitsFrame, width="6", textvariable=yminVar)
+    ymaxVar <- tclVar("")
+    ymaxEntry <- tkentry(limitsFrame, width="6", textvariable=ymaxVar)
+   
     onOK <- function(){
         x <- getSelection(xBox)
         y <- getSelection(yBox)
         g <- getSelection(gBox)
+
+        xmin <- as.numeric(tclvalue(xminVar))
+        xmax <- as.numeric(tclvalue(xmaxVar))
+        ymin <- as.numeric(tclvalue(yminVar))
+        ymax <- as.numeric(tclvalue(ymaxVar))
+
+        number.xna <- is.na(xmin) + is.na(xmax)
+        if (number.xna==1) {
+            errorCondition(recall=Regr1Plot,
+                           message=gettextRcmdr("Both or neither xlim values must be numbers."))
+            return()
+          }
+        xlim.command <- ifelse(number.xna==0, deparse(c(xmin, xmax)), "")
+
+        number.yna <- is.na(ymin) + is.na(ymax)
+        if (number.yna==1) {
+            errorCondition(recall=Regr1Plot,
+                           message=gettextRcmdr("Both or neither ylim values must be numbers."))
+            return()
+          }
+         ylim.command <- ifelse(number.yna==0, deparse(c(ymin, ymax)), "")
+
+
+
         closeDialog()
         if (length(x) == 0 || length(y) == 0){
             errorCondition(recall=Regr1Plot, message=gettextRcmdr("You must select two variables"))
@@ -97,23 +116,39 @@ Regr1Plot <- function() {
         subset <- if (trim.blanks(subset) == gettextRcmdr("<all valid cases>")) "" 
             else paste(", subset=", subset, sep="")
 
+        points.yhat <- ("1" == tclvalue(points.yhatVariable))
+        points.yhat.command <- ifelse(points.yhat, "", ",\n points.yhat=FALSE")
+
         xlab <- trim.blanks(tclvalue(xlabVar))
         if(xlab == gettextRcmdr("<auto>")) xlab <- x
-        xlab <- paste(', xlab="', xlab, '"', sep="")
+        xlab <- paste(',\n xlab="', xlab, '"', sep="")
         ylab <- trim.blanks(tclvalue(ylabVar))
         if(ylab == gettextRcmdr("<auto>")) ylab <- y
         ylab <- paste(', ylab="', ylab, '"', sep="")
 
-        xlim <- trim.blanks(tclvalue(xlimVar))
-        xlim <- if(xlim == gettextRcmdr("<auto>")) ""
-        else paste(', xlim=', xlim, sep="")
-        ylim <- trim.blanks(tclvalue(ylimVar))
-        ylim <- if(ylim == gettextRcmdr("<auto>")) ""
-        else paste(', ylim=', ylim, sep="")
+        ADS.x <- get(.activeDataSet)[[x]]
+        ADS.y <- get(.activeDataSet)[[y]]
+        ADS.lm <- lm(ADS.y ~ ADS.x)
+        ADS.ylim <- range(ADS.y, predict(ADS.lm))
+
+        aspect.x.y <- diff(range(ADS.x)) / diff(range(ADS.y))
+        ADS.xlim <- range(ADS.x, ADS.x + resid(ADS.lm)*aspect.x.y)
+        
+        if(xlim.command == "") xlim.command <- deparse(ADS.xlim)
+        xlim <- paste(',\n xlim=', xlim.command, sep="")
+        if(ylim.command == "") ylim.command <- deparse(ADS.ylim)
+        ylim <- paste(', ylim=', ylim.command, sep="")
 
         model <- if (0==tclvalue(modelVariable)) ""
-         else paste(', model=', ActiveModel(), sep="")
-
+        else {
+          .activeModel <- ActiveModel()
+          if (is.null(.activeModel)) {
+            errorCondition(recall=Regr1Plot,
+                           message=gettextRcmdr("No Active model"))
+            return()
+          }
+          paste(',\n model=', .activeModel, sep="")
+        }
         main <- if (model == "")
           paste('Residuals from model: ', y, ' ~ ', x)
         else
@@ -125,7 +160,8 @@ Regr1Plot <- function() {
                              xlab, ylab, ", cex=1.3",
                              xlim, ylim, model,
                              subset,
-                             ", main='", main, "')", sep=""))
+                             points.yhat.command,
+                             ",\n main='", main, "')", sep=""))
         }
         else {
           doItAndPrint(paste("regr1.plot(", "x=", Dx, ", y=", Dy,
@@ -134,7 +170,8 @@ Regr1Plot <- function() {
                              xlab, ylab, ", cex=1.3",
                              xlim, ylim, model,
                              subset,
-                             ", main='", main, "')", sep=""))
+                             points.yhat.command,
+                             ",\n main='", main, "')", sep=""))
         }
         activateMenus()
         tkfocus(CommanderWindow())
@@ -143,13 +180,23 @@ Regr1Plot <- function() {
     tkgrid(getFrame(xBox), getFrame(yBox),
            getFrame(gBox), columnspan=1, sticky="nw") 
     tkgrid(variablesFrame, sticky="w")   
-    tkgrid(optionsFrame, sticky="w")
-    tkgrid(residualsFrame, sticky="w")
-    tkgrid(modelFrame, sticky="w")
-    tkgrid(xlimFrame, sticky="w")
-    tkgrid(ylimFrame, sticky="w")
-##     tkgrid(modelFrame, sticky="w")
     tkgrid(subsetFrame, sticky="w")
+
+    tkgrid(tklabel(woFrame, text=gettextRcmdr("Options"), fg="blue"), sticky="w")
+    tkgrid(optionsFrame, sticky="w")
+    tkgrid(modelFrame, residualsFrame,
+           woFrame, columnspan=1, sticky="nw") 
+    tkgrid(workingFrame, sticky="w")   
+    
+    limitsnamesFrame <- tkframe(top)
+    tkgrid(tklabel(limitsnamesFrame,
+                   text=gettextRcmdr("xlim and ylim (try defaults first)"),
+                   fg="blue"), sticky="w")
+    tkgrid(tklabel(limitsnamesFrame,
+                   text="xmin       xmax       ymin       ymax"), sticky="w")
+    tkgrid(limitsnamesFrame, sticky="w")
+    tkgrid(xminEntry, xmaxEntry, yminEntry, ymaxEntry)
+    tkgrid(limitsFrame, sticky="w")
     tkgrid(labelsFrame, sticky="w")
     tkgrid(tklabel(top, text=" "))    
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
