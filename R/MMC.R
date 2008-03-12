@@ -8,11 +8,18 @@ MMCmenu <- function() {
     onOK <- function() {
       model <- getSelection(modelBox)
 
-        if (length(model) != 1) {
-            errorCondition(recall=MMCmenu,
-                           message=sprintf(gettextRcmdr("Please select an AOV model.")))
-            return()
-            }
+      if (length(model) != 1) {
+        errorCondition(recall=MMCmenu,
+                       message=sprintf(gettextRcmdr("Please select an AOV model.")))
+        return()
+      }
+
+      if (get(model)$df.residual == 0) {
+        errorCondition(recall=MMCmenu,
+                       message=sprintf(gettextRcmdr("Model has 0 df for residual.\nPlease pick a different model or cancel the MMC command.")))
+        return()
+      }
+
       closeDialog()
 
       ## doItAndPrint(paste(".activeAOVModel <- '", model, "'", sep=""))
@@ -24,7 +31,8 @@ MMCmenu <- function() {
 
       command.factors.length <-
         paste("length(", model, ".factors)", sep="")
-      focus.and.lmatrows <- if (eval(parse(text=command.factors.length)) > 1) {
+      focus.and.lmatrows <-  if (eval(parse(text=command.factors.length)) > 1)
+        {
         putRcmdr(".MMC2.result", "cancelled") ## to check later
         MMC2menu()
         getRcmdr(".MMC2.result")
@@ -35,15 +43,15 @@ MMCmenu <- function() {
       
       command1 <- paste(model, ".mmc <- glht.mmc(", model,
                         focus.and.lmatrows, ")", sep="")
+
       doItAndPrint(command1)
 
       command2 <- paste(model, ".mmc", sep="")
       doItAndPrint(command2)
 
       c2a <- paste(command2, "$mca$table[,'estimate']", sep="")
-      c2b <- paste("x.left <- min(outer(",
-                   c2a, ", ", c2a ,
-                   ", '-'))",
+      c2b <- paste("x.left <- -max(abs(",
+                   c2a, "))",
                    sep="")
       eval(parse(text=c2b))
 
@@ -121,16 +129,21 @@ MMC2menu <- function() {
             }
 
       if (tclvalue(lmatrowsVariable)=="1") {
-        lmat.rows <- grep(paste(focus, "\\[T.", sep=""),
+        lmat.rows <- grep(paste("^", focus, sep=""),
                           gsub(".*:.*", "", lmat.rownames))
 
         logger(paste("Default lmat.rows:",
                      paste(lmat.rownames[lmat.rows], collapse=" ")))
+        if (length(lmat.rows)==0) {
+          logger("We can't verify that the rows you selected are correct.")
+          errorCondition(recall=MMC2menu,
+                         message=sprintf(gettextRcmdr("Please select the lmat rowfrom the list below.")))
+        }
       }
       else {
         lmat.rowselected <- getSelection(lmat.rowsBox)
         lmat.rows <- match(lmat.rowselected, lmat.rownames)
-        
+
         if (!((length(xlevels[[focus]]) == length(lmat.rows)+1) &&
               all(substring(lmat.rowselected, 1, nchar(focus)) ==  focus) &&
               !any(grep("\\[", sub("\\[", "\\*", lmat.rownames)) %in% lmat.rows) &&

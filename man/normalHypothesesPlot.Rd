@@ -1,4 +1,5 @@
-\name{normalHypothesesPlot}
+\name{normal.and.t.hypotheses.plot}
+\alias{normal.and.t.hypotheses.plot}
 \alias{normalHypothesesPlot}
 \alias{tHypothesesPlot}
 \alias{FHypothesesPlot}
@@ -9,9 +10,11 @@
   Rcmdr menus to draw graphs of hypotheses, critical values, and p-values.
 }
 \usage{
-normalHypothesesPlot()
+normal.and.t.hypotheses.plot()
 
-tHypothesesPlot()
+%normalHypothesesPlot() ## deprecated in favor of normal.and.t.hypotheses.plot()
+
+%tHypothesesPlot()      ## deprecated in favor of normal.and.t.hypotheses.plot()
 
 FHypothesesPlot()
 
