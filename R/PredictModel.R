@@ -63,22 +63,31 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
     }
         nrows <- as.numeric(tclvalue(rowsValue))
         ncols <- length(colsNames)
-        cell <- 0
-        newdata <- rep(NA, nrows*ncols)
-        row.names <- rep("", nrows)
-        col.names <- dimnames(attr(get(.active.model)$terms,"factors"))[[2]]
-        for (i in 1:nrows) row.names[i] <- 
-            eval(parse(text=paste("tclvalue(", paste(".rowname.", i, sep=""),")", sep="")))
+
+    col.names <- dimnames(attr(get(.active.model)$terms,"factors"))[[2]]
+    newdata <- get(activeDataSet())[1:nrows, col.names]
+    for (i in names(newdata)) newdata[[i]][] <- NA
+    ## sapply(newdata, levels)
+    row.names <- rep("", nrows)
+    for (i in 1:nrows) row.names[i] <- 
+      eval(parse(text=paste("tclvalue(", paste(".rowname.", i, sep=""),")", sep="")))
         for (i in 1:nrows){
             for (j in 1:ncols){
-                cell <- cell+1
                 varname <- paste(".tab.", i, ".", j, sep="")
-                newdata[cell] <- as.numeric(eval(parse(text=paste("tclvalue(", varname,")", sep=""))))
+                cell.value <-
+                  eval(parse(text=paste("tclvalue(", varname,")", sep="")))
+                aDSj <- get(activeDataSet())[[col.names[j]]]
+                if (is.factor(aDSj) || is.character(aDSj))
+                  newdata[i,j] <- cell.value
+                else
+                  newdata[i,j] <- as.numeric(cell.value)
                 }
             }
         newdata <- na.omit(newdata)
-        if (length(newdata) != nrows*ncols) {
-            errorCondition(recall=PredictModel, message=sprintf(gettextRcmdr("Number of valid entries (%d)\nnot equal to number of rows (%d) * number of columns (%d)."), length(newdata), nrows, ncols))
+        if (prod(dim(newdata)) != nrows*ncols) {
+            errorCondition(recall=PredictModel,
+                           message=sprintf(gettextRcmdr("Number of valid entries (%d)\nnot equal to number of rows (%d) * number of columns (%d)."),
+                             prod(dim(newdata)), nrows, ncols))
             return()
             }
         if (length(unique(row.names)) != nrows) {
@@ -92,16 +101,16 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
     closeDialog()
 
     confLevel <- as.numeric(tclvalue(confLevelVar))
-
-    dim(newdata) <- c(ncols, nrows) ## reversed!
-    newdata <- t(newdata)           ## restored
     j <- 1
-    command <- paste(".NewData <- data.frame(", col.names[j], "=", deparse(newdata[,j]), sep="")
+    command <- paste(".NewData <- data.frame(", col.names[j], "=",
+                     deparse(newdata[,j]), sep="")
     if (ncols > 1)
       for (j in 2:ncols) {
-        command <- paste(command, ", ", col.names[j], "=", deparse(newdata[,j]), sep="")
+        command <- paste(command, ",\n ", col.names[j], "=",
+                         deparse(newdata[,j]), sep="")
       }
-    command <- paste(command, ", row.names=", deparse(row.names),")", sep="")
+    command <- paste(command, ",\n ", "row.names=",
+                     deparse(row.names),")", sep="")
     doItAndPrint(command)
     doItAndPrint(".NewData  # Newdata")
 
@@ -109,7 +118,7 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
                      .active.model,
                      ', newdata=.NewData, interval="',
                      tclvalue(predictVariable),
-                     '", level=', tclvalue(confLevelVar),
+                     '",\n level=', tclvalue(confLevelVar),
                      ', se.fit=', ("1"==tclvalue(seVariable)) ,
                      ')', sep="")
     doItAndPrint(command)

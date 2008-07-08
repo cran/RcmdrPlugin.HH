@@ -17,7 +17,7 @@
     item    graphsMenu      command         "Plot of two-way interactions... (HH)"               Interaction2wtRcmdr       "numericP() && factorsP(2)" "" ##HH
     item    graphsMenu      command         "XY conditioning plot... (HH)"                  Xyplot.HH                    "numericP(2)" "" ##HH
     item    ThreeDPlotMenu  command         "3D scatterplot... (HH)"                             Scatter3DDialog.HH                "numericP(3)" "packageAvailable('rgl')" ##HH
-    item    hypothesisMenu  command         "ANOVA table (Type II Sums of Squares)"         anovaTable                  "activeModelP()" "packageAvailable('car')" ##HH
+    item    hypothesisMenu  command         "ANOVA table (Type II Sums of Squares)"         anovaTableII.HH                  "activeModelP()" "packageAvailable('car')" ##HH
     item    hypothesisMenu  command         "ANOVA table (Type I Sums of Squares)"          anovaTableI.HH              "activeModelP()" ""
     item    normalMenu     command          "Plot hypotheses or Confidence Intervals ... (HH)"               normal.and.t.hypotheses.plot        ""          "" ##HH
     item    tMenu           command         "Plot hypotheses or Confidence Intervals ... (HH)"               normal.and.t.hypotheses.plot             ""          "" ##HH
