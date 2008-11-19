@@ -65,7 +65,7 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
         ncols <- length(colsNames)
 
     col.names <- dimnames(attr(get(.active.model)$terms,"factors"))[[2]]
-    newdata <- get(activeDataSet())[1:nrows, col.names]
+    newdata <- get(activeDataSet())[1:nrows, col.names, drop=FALSE]
     for (i in names(newdata)) newdata[[i]][] <- NA
     ## sapply(newdata, levels)
     row.names <- rep("", nrows)
