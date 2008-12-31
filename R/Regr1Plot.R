@@ -117,11 +117,11 @@ Regr1Plot <- function() {
             else paste(", subset=", subset, sep="")
 
         points.yhat <- ("1" == tclvalue(points.yhatVariable))
-        points.yhat.command <- ifelse(points.yhat, "", ",\n points.yhat=FALSE")
+        points.yhat.command <- ifelse(points.yhat, "", ", points.yhat=FALSE")
 
         xlab <- trim.blanks(tclvalue(xlabVar))
         if(xlab == gettextRcmdr("<auto>")) xlab <- x
-        xlab <- paste(',\n xlab="', xlab, '"', sep="")
+        xlab <- paste(', xlab="', xlab, '"', sep="")
         ylab <- trim.blanks(tclvalue(ylabVar))
         if(ylab == gettextRcmdr("<auto>")) ylab <- y
         ylab <- paste(', ylab="', ylab, '"', sep="")
@@ -135,7 +135,7 @@ Regr1Plot <- function() {
         ADS.xlim <- range(ADS.x, ADS.x + resid(ADS.lm)*aspect.x.y)
         
         if(xlim.command == "") xlim.command <- deparse(ADS.xlim)
-        xlim <- paste(',\n xlim=', xlim.command, sep="")
+        xlim <- paste(', xlim=', xlim.command, sep="")
         if(ylim.command == "") ylim.command <- deparse(ADS.ylim)
         ylim <- paste(', ylim=', ylim.command, sep="")
 
@@ -147,7 +147,7 @@ Regr1Plot <- function() {
                            message=gettextRcmdr("No Active model"))
             return()
           }
-          paste(',\n model=', .activeModel, sep="")
+          paste(', model=', .activeModel, sep="")
         }
         main <- if (model == "")
           paste('Residuals from model: ', y, ' ~ ', x)
@@ -161,7 +161,7 @@ Regr1Plot <- function() {
                              xlim, ylim, model,
                              subset,
                              points.yhat.command,
-                             ",\n main='", main, "')", sep=""))
+                             ", main='", main, "')", sep=""))
         }
         else {
           doItAndPrint(paste("regr1.plot(", "x=", Dx, ", y=", Dy,
@@ -171,7 +171,7 @@ Regr1Plot <- function() {
                              xlim, ylim, model,
                              subset,
                              points.yhat.command,
-                             ",\n main='", main, "')", sep=""))
+                             ", main='", main, "')", sep=""))
         }
         activateMenus()
         tkfocus(CommanderWindow())

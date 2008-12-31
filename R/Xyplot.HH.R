@@ -34,6 +34,12 @@ Xyplot.HH <- function() {
     layoutRowsVar <- tclVar("")
     layoutRowsEntry <- tkentry(scalarsFrame, width="6", textvariable=layoutRowsVar)
 
+    checkBoxes(frame="typeFrame",
+               boxes=c("points", "lines"),
+               initialValues=c(1,0),
+               labels=gettextRcmdr(c("Points", 
+                "Lines")))
+
     onOK <- function() {
         predictor <- getSelection(predictorBox)
         response <- getSelection(responseBox)
@@ -69,7 +75,7 @@ Xyplot.HH <- function() {
 
         
         
-        condtions.command <-
+        conditions.command <-
           if (length(conditions)==0) {
             if (outer) {
               if (layout.command=="")
@@ -81,50 +87,77 @@ Xyplot.HH <- function() {
               else
                 paste(", layout=", layout.command, sep="")
             }
+            else
+              if (layout.command != "")
+                paste(", layout=", layout.command, sep="")
           }
           else {  ## (length(conditions)>0)
             if (outer) {
               condition.levels <- prod(sapply(conditions, d.f=get(.activeDataSet),
                                               function(g, d.f) length(levels(d.f[[g]]))))
-              paste(", layout=c(",
-                    condition.levels,
-                    "*",
-                    length(predictor),
-                    ",",
-                    length(response),
-                    ")",
-                    ## ", between=list(x=c(0,0, 1, 0,0), y=1)",
-                    ", between=list(x=c(",
-                    paste(rep(c(rep(0, condition.levels-1), 1),
-                              length=condition.levels*length(predictor)-1),
-                          collapse=","),
-                    "), y=1)")
+              if (layout.command!="")
+                paste(", layout=", layout.command, sep="")
+              else
+                paste(", layout=c(",
+                      condition.levels,
+                      "*",
+                      length(predictor),
+                      ",",
+                      length(response),
+                      ")",
+                      ## ", between=list(x=c(0,0, 1, 0,0), y=1)",
+                      ", between=list(x=c(",
+                      paste(rep(c(rep(0, condition.levels-1), 1),
+                                length=condition.levels*length(predictor)-1),
+                            collapse=","),
+                      "), y=1)")
             }
+            else
+              if (layout.command != "")
+                paste(", layout=", layout.command, sep="")
           }
         
-              groups.command <-
-              if (length(groups)==1) paste(", groups=", groups, sep="")
-              else ""
-              
+##         groups.command <-
+##           if (length(groups)==1) paste(", groups=", groups, sep="")
+##           else ""
+        groups.command <- switch(as.character(length(groups)),
+                                 "0"="",
+                                 "1"=paste(", groups=", groups, sep=""),
+                                 paste(", groups=interaction(",
+                                       paste(groups, collapse=","),
+                                       ")", sep=""))
+
+        points.check <- ("1" == tclvalue(pointsVariable))
+        lines.check  <- ("1" == tclvalue(linesVariable))
+        if(!(points.check || lines.check)) {
+            errorCondition(recall=Xyplot.HH,
+                           message=gettextRcmdr("Choose at least one of points or lines."))
+            return()
+          }
+        type.command <- paste(", type=",
+                              deparse(c("p"[points.check], "l"[lines.check])),
+                              sep="")
+        
         xyplot.command <- paste("xyplot(",
                                 paste(response, collapse=' + '),
                                 " ~ ",
                                 paste(predictor, collapse=' + '),
                                 if (length(conditions) > 0)
-                                   paste(" | ",
+                                   paste(" |",
                                          paste(conditions, collapse=' + ')
                                          ) else "",
-                                if (outer) ",\n outer=TRUE",
-                                condtions.command,
+                                if (outer) ", outer=TRUE",
+                                conditions.command,
                                 groups.command,
+                                type.command,
                                 ", pch=16",
-                                if (auto.key) ",\n auto.key=list(border=TRUE), par.settings = simpleTheme(pch=16)" else "",
+                                if (auto.key) ", auto.key=list(border=TRUE), par.settings=simpleTheme(pch=16)" else "",
                                 paste(", scales=list(x=list(relation='",
                                       x.relation,
                                       "'), y=list(relation='",
                                       y.relation,
                                       "'))", sep=""),
-                                ",\n data=", .activeDataSet, ')', sep="")
+                                ", data=", .activeDataSet, ')', sep="")
         doItAndPrint(xyplot.command)
         activateMenus()
         tkfocus(CommanderWindow())
@@ -138,14 +171,21 @@ Xyplot.HH <- function() {
            getFrame(groupsBox),
            columnspan=1, sticky="w")
     tkgrid(cgFrame, sticky="w")
+
     tkgrid(tklabel(top, text=gettextRcmdr("Options"), fg="blue"), sticky="w")
     tkgrid(optionsFrame, sticky="w")
+    tkgrid(tklabel(top, text=gettextRcmdr("Plot Type (one or both)"), fg="blue"), sticky="w")
+    tkgrid(typeFrame, sticky="w")
+
     tkgrid(x.relationFrame, y.relationFrame, columnspan=2, sticky="w")
     tkgrid(relationFrame, sticky="w")
-    tkgrid(tklabel(top, text=gettextRcmdr("Layout"), fg="blue"), sticky="w")
+
+    tkgrid(tklabel(top, text=gettextRcmdr("Layout"), fg="blue"),
+           sticky="w")
     tkgrid(tklabel(scalarsFrame, text=gettextRcmdr("number of columns:")), layoutColumnsEntry, sticky="w")
     tkgrid(tklabel(scalarsFrame, text=gettextRcmdr("number of rows:")), layoutRowsEntry, sticky="w")
     tkgrid(scalarsFrame, sticky="w")
+
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
     dialogSuffix(rows=6, columns=2)
     }

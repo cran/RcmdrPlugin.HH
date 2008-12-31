@@ -3,8 +3,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Rcmdr Menu function to specify an xyplot.}
 \description{
-This is an enhancement of the Rcmdr {\tt Xyplot} function (which I
-wrote) to include layout parameters, to force solid dots, and to
+This is an enhancement of the Rcmdr \code{Xyplot} function (which I
+wrote) to include layout parameters and plot type, to force solid dots, and to
 distinguish
 between conditioning variables in the formula and group varibles.
 }

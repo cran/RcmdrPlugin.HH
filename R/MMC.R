@@ -40,7 +40,13 @@ MMCmenu <- function() {
       else
         ""
       if (focus.and.lmatrows=="cancelled") return()
+
+      c0a <- paste("right.omd <- .8")
+      eval(parse(text=c0a))
       
+      command0<- paste("old.omd <- par(omd=c(0, ", right.omd, ", 0,1))", sep="")
+      doItAndPrint(command0)
+
       command1 <- paste(model, ".mmc <- glht.mmc(", model,
                         focus.and.lmatrows, ")", sep="")
 
@@ -68,10 +74,10 @@ MMCmenu <- function() {
                    sep="")
       eval(parse(text=c2e))
 
-      eval(parse(text=("ry <- mean(y.range) + (y.range - mean(y.range))*(-2*x.left+x.offset)/(-2*x.left)*1.1")))
+      eval(parse(text=("ry <- mean(y.range) + (y.range - mean(y.range))*(-2*x.left+x.offset)/(-2*x.left)*1.4")))
 
       command3 <- paste("plot(", model, ".mmc, x.offset=",
-                        x.offset, ",\n     ry=", deparse(ry), ")", sep="")
+                        x.offset, ", ry=", deparse(ry), ")", sep="")
       doItAndPrint(command3)
 
       if (tclvalue(tieVariable)=="1") {
@@ -80,9 +86,14 @@ MMCmenu <- function() {
                 sep="")
         doItAndPrint(command4)
       }
+
+      command5<- "par(old.omd)"
+      doItAndPrint(command5)
+
+      
       logger("## The default placement of MMC plots may not be ideal.
 ## You may need to adjust the x.offset and/or ry arguments.
-## You may need to use the par('omd') parameter before the plot.
+## You may need to adjust the par('omd') parameter before the plot.
 ## See the help file for MMC for examples.")
     }
 
@@ -170,5 +181,10 @@ MMC2menu <- function() {
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
     dialogSuffix(rows=3, columns=2)
 }
+
+AOVModelsP <-
+  function (n = 1) 
+  length(listAOVModels()) >= n
+
 
 ## source("~/HH-R.package/RcmdrPlugin.HH/R/MMC.R")

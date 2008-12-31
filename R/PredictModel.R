@@ -106,10 +106,10 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
                      deparse(newdata[,j]), sep="")
     if (ncols > 1)
       for (j in 2:ncols) {
-        command <- paste(command, ",\n ", col.names[j], "=",
+        command <- paste(command, ", ", col.names[j], "=",
                          deparse(newdata[,j]), sep="")
       }
-    command <- paste(command, ",\n ", "row.names=",
+    command <- paste(command, ", ", "row.names=",
                      deparse(row.names),")", sep="")
     doItAndPrint(command)
     doItAndPrint(".NewData  # Newdata")
@@ -118,7 +118,7 @@ eval(parse(text=paste("tkgrid(", make.col.names, ")", sep="")), envir=env)
                      .active.model,
                      ', newdata=.NewData, interval="',
                      tclvalue(predictVariable),
-                     '",\n level=', tclvalue(confLevelVar),
+                     '", level=', tclvalue(confLevelVar),
                      ', se.fit=', ("1"==tclvalue(seVariable)) ,
                      ')', sep="")
     doItAndPrint(command)

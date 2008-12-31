@@ -12,6 +12,9 @@ function(){
     radioButtons(name="diagonal", buttons=c("density", "histogram", "boxplot", "oned", "qqplot", "none"),
         labels=gettextRcmdr(c("Density plots", "Histograms", "Boxplots", "One-dimensional scatterplots", "Normal QQ plots", "Nothing (empty)")),
         title=gettextRcmdr("On Diagonal"))
+    radioButtons(name="diagonalDirection", buttons=c("SW.NE", "NW.SE"),
+        labels=gettextRcmdr(c("SW-NE ' / '", "NW-SE ' \\ '")),
+        title=gettextRcmdr("Diagonal Direction"))
     subsetBox()
     onOK <- function(){
         variables <- getSelection(variablesBox)
@@ -24,6 +27,7 @@ function(){
         smooth <- as.character("1" == tclvalue(smoothLineVariable))
         span <- as.numeric(tclvalue(sliderValue))
         diag <- as.character(tclvalue(diagonalVariable))
+        diagDir <- as.character(tclvalue(diagonalDirectionVariable))
         subset <- tclvalue(subsetVariable)
         subset <- if (trim.blanks(subset) == gettextRcmdr("<all valid cases>")) "" 
             else paste(", subset=", subset, sep="")
@@ -33,7 +37,7 @@ function(){
                            ", reg.line=", line, ", smooth=", smooth,
                            ", span=", span/100, ", diagonal = '", diag,
                            "', data=", .activeDataSet, subset,
-                           ", row1attop= FALSE",
+                           ", row1attop=", diagDir=="NW.SE",
                            ")", sep="")
           logger(command)
           justDoIt(command)
@@ -44,7 +48,7 @@ function(){
                            ", span=", span/100, ", diagonal= '", diag,
                            "', by.groups=", .linesByGroup,
                            ", data=", .activeDataSet, subset,
-                           ", row1attop= FALSE",
+                           ", row1attop=", diagDir=="NW.SE",
                            ")", sep="")
           logger(command)
           justDoIt(command)
@@ -57,6 +61,7 @@ function(){
     tkgrid(getFrame(variablesBox), sticky="nw")    
     tkgrid(optionsFrame, sticky="w")
     tkgrid(diagonalFrame, sticky="w")
+    tkgrid(diagonalDirectionFrame, sticky="w")
     tkgrid(subsetFrame, sticky="w")
     tkgrid(groupsFrame, sticky="w")
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
