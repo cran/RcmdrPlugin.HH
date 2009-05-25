@@ -103,7 +103,7 @@ function(){
 
         if (rowPct == 1) doItAndPrint("rowPercents(.Table) # Row Percentages")
         if (colPct == 1) doItAndPrint("colPercents(.Table) # Column Percentages")        
-        if (totPct == 1) doItAndPrint("totPercents2.HH(.Table) # Total Percentages")        
+        if (totPct == 1) doItAndPrint("totPercents(.Table) # Total Percentages")        
 
  
         if (chisq == 1) {

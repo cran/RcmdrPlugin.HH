@@ -19,9 +19,9 @@
     item    ThreeDPlotMenu  command         "3D scatterplot... (HH)"                             Scatter3DDialog.HH                "numericP(3)" "packageAvailable('rgl')" ##HH
     item    hypothesisMenu  command         "ANOVA table (Type II Sums of Squares)"         anovaTableII.HH                  "activeModelP()" "packageAvailable('car')" ##HH
     item    hypothesisMenu  command         "ANOVA table (Type I Sums of Squares)"          anovaTableI.HH              "activeModelP()" ""
-    item    normalMenu     command          "Plot hypotheses or Confidence Intervals ... (HH)"               normal.and.t.hypotheses.plot        ""          "" ##HH
-    item    tMenu           command         "Plot hypotheses or Confidence Intervals ... (HH)"               normal.and.t.hypotheses.plot             ""          "" ##HH
-    item    FMenu           command         "Plot F hypotheses ... (HH)"                   FHypothesesPlot             ""          "" ##HH
+    item    normalMenu     command          "Plot hypotheses or Confidence Intervals... (HH)"               normal.and.t.hypotheses.plot        ""          "" ##HH
+    item    tMenu           command         "Plot hypotheses or Confidence Intervals... (HH)"               normal.and.t.hypotheses.plot             ""          "" ##HH
+    item    FMenu           command         "Plot F hypotheses... (HH)"                   FHypothesesPlot             ""          "" ##HH
     item    chisqMenu       command         "Plot chi-squared hypotheses... (HH)"              ChisqHypothesesPlot   ""          "" ##HH
     item    graphsMenu      command         "Dotplot with stacked multiple hits... (HH)"         DotplottbRcmdr           "numericP()" "" ##HH
     item    toolsMenu       command         "Large Font for Projectors (HH)"               Projector                   ""              "" ##HH

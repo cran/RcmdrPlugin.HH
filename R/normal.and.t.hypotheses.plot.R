@@ -80,15 +80,16 @@ normal.and.t.hypotheses.plot <- function() {
             return()
             }
     
-    command <- paste('normal.and.t.dist(',
+    command <- paste('normal.and.t.dist.result <- ',
+                     'normal.and.t.dist(',
                      'std.dev=', sigma,
                      ', n=', n,
                      ', deg.freedom=', degfree,
                      ', mu.H0=', mu,
                      ', xmin=', NA,
                      ', xmax=', NA,
-                     ', fx.min=', NA,
-                     ', fx.max=', ymax,
+                     ', gxbar.min=', NA,
+                     ', gxbar.max=', ymax,
                      ', Use.alpha.right=', !is.na(rightAlpha),
                      ', alpha.right=', rightAlpha,
                      ', Use.alpha.left=', !is.na(leftAlpha),

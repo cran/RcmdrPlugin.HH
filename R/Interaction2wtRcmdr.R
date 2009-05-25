@@ -20,7 +20,9 @@ function() {
         .activeDataSet <- ActiveDataSet()
         i2wt.command <- paste("interaction2wt(",
                               response, " ~ ", paste(groups, collapse=' + '),
-                              ", data=", .activeDataSet, ')', sep="")
+                              ", data=", .activeDataSet,
+                              if ("1" == tclvalue(simpleVariable)) ", simple=TRUE",
+                              ')', sep="")
         doItAndPrint(i2wt.command)
         activateMenus()
         tkfocus(CommanderWindow())
@@ -29,6 +31,14 @@ function() {
     buttonsFrame <- tkframe(top)
     OKCancelHelp(helpSubject="interaction2wt")
     tkgrid(getFrame(groupBox), getFrame(responseBox), sticky="nw")
+
+    simpleVariable <- tclVar("0")
+    simpleFrame <- tkframe(top)
+    simpleCheckBox <- tkcheckbutton(simpleFrame, variable=simpleVariable)
+    tkgrid(tklabel(simpleFrame, text=gettextRcmdr("Simple Effects")),
+           simpleCheckBox, sticky="w")
+    tkgrid(simpleFrame, sticky="w")
+
     tkgrid(optionsFrame, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
     dialogSuffix(rows=3, columns=2)
