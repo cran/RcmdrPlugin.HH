@@ -43,14 +43,14 @@ draw a non-least-squares plane for pedagogical comparison.
 \code{\link[HH]{ci.plot}} Plot confidence and prediction intervals for
 simple linear regression.
 
-\code{\link[HH]{panel.bwplot.hh}} Panel functions for \code{bwplot} that
+\code{\link[HH]{panel.bwplot.intermediate.hh}} Panel function for \code{bwplot} that
   give the user control over the placement of the boxes.
 
 \code{\link[HH]{interaction2wt}} Plot all main effects and twoway
 interactions in a multifactor design.
 
 \code{\link{scatterPlotMatrix.HH}} Similar to
-\code{\link[Rcmdr]{scatterPlotMatrix}}
+\code{\link[car]{scatterplot.matrix}}
   The revision uses \code{row1attop=FALSE} to force the main diagonal of
   the scatterplot matrix to go uphill from southwest to northeast.
 
