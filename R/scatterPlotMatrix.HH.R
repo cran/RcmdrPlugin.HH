@@ -1,11 +1,11 @@
 "scatterPlotMatrix.HH" <-
 function(){
     require("car")
-    initializeDialog(title=gettextRcmdr("Scatterplot Matrix"))
+    initializeDialog(title=gettextRcmdr("Scatterplot Matrix (HH)"))
     variablesBox <- variableListBox(top, Numeric(), title=gettextRcmdr("Select variables (three or more)"),
         selectmode="multiple", initialSelection=NULL)
-    checkBoxes(frame="optionsFrame", boxes=c("lsLine", "smoothLine"), initialValues=rep(1,1),
-        labels=gettextRcmdr(c("Least-squares lines", "Smooth lines")))
+    checkBoxes(frame="optionsFrame", boxes=c("lsLine", "smoothLine", "spread"), initialValues=c(1,0,0),
+        labels=gettextRcmdr(c("Least-squares lines", "Smooth lines", "Show spread")))
     sliderValue <- tclVar("50")
     slider <- tkscale(optionsFrame, from=0, to=100, showvalue=TRUE, variable=sliderValue,
         resolution=5, orient="horizontal")
@@ -25,41 +25,43 @@ function(){
             }
         line <- if("1" == tclvalue(lsLineVariable)) "lm" else "FALSE"
         smooth <- as.character("1" == tclvalue(smoothLineVariable))
+		spread <- as.character("1" == tclvalue(spreadVariable))
         span <- as.numeric(tclvalue(sliderValue))
         diag <- as.character(tclvalue(diagonalVariable))
         diagDir <- as.character(tclvalue(diagonalDirectionVariable))
         subset <- tclvalue(subsetVariable)
-        subset <- if (trim.blanks(subset) == gettextRcmdr("<all valid cases>")) "" 
+        subset <- if (trim.blanks(subset) == gettextRcmdr("<all valid cases>")) ""
             else paste(", subset=", subset, sep="")
         .activeDataSet <- ActiveDataSet()
         if (.groups == FALSE) {
-          command <- paste("scatterplot.matrix(~", paste(variables, collapse="+"),
-                           ", reg.line=", line, ", smooth=", smooth,
-                           ", span=", span/100, ", diagonal = '", diag,
-                           "', data=", .activeDataSet, subset,
+           command <- paste("scatterplotMatrix(~", paste(variables, collapse="+"),
+                ", reg.line=", line, ", smooth=", smooth, ", spread=", spread,
+                ", span=", span/100, ", diagonal = '", diag,
+                "', data=", .activeDataSet, subset,
                            ", row1attop=", diagDir=="NW.SE",
-                           ")", sep="")
-          logger(command)
-          justDoIt(command)
-        }
+                            ")", sep="")
+           logger(command)
+           justDoIt(command)
+            }
         else {
-          command <- paste("scatterplot.matrix(~", paste(variables, collapse="+")," | ", .groups,
-                           ", reg.line=", line, ", smooth=", smooth,
-                           ", span=", span/100, ", diagonal= '", diag,
-                           "', by.groups=", .linesByGroup,
-                           ", data=", .activeDataSet, subset,
-                           ", row1attop=", diagDir=="NW.SE",
-                           ")", sep="")
-          logger(command)
-          justDoIt(command)
-        }
+            command <- paste("scatterplotMatrix(~", paste(variables, collapse="+")," | ", .groups,
+                ", reg.line=", line, ", smooth=", smooth, ", spread=", spread,
+                ", span=", span/100, ", diagonal= '", diag,
+                "', by.groups=", .linesByGroup,
+                ", data=", .activeDataSet, subset,
+                             ", row1attop=", diagDir=="NW.SE",
+                             ")", sep="")
+            logger(command)
+            justDoIt(command)
+            }
         activateMenus()
         tkfocus(CommanderWindow())
         }
     groupsBox(scatterPlot, plotLinesByGroup=TRUE)
-    OKCancelHelp(helpSubject="scatterplot.matrix")
-    tkgrid(getFrame(variablesBox), sticky="nw")    
-    tkgrid(optionsFrame, sticky="w")
+    OKCancelHelp(helpSubject="scatterplotMatrix")
+    tkgrid(getFrame(variablesBox), sticky="nw")
+	tkgrid(labelRcmdr(optionsFrame, text=gettextRcmdr("Span for smooth")), slider, sticky="w")    
+	tkgrid(optionsFrame, sticky="w")
     tkgrid(diagonalFrame, sticky="w")
     tkgrid(diagonalDirectionFrame, sticky="w")
     tkgrid(subsetFrame, sticky="w")
@@ -67,4 +69,3 @@ function(){
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
     dialogSuffix(rows=6, columns=2)
     }
-

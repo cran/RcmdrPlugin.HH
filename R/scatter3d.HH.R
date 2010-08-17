@@ -17,7 +17,7 @@ function (x, y, z,
             sphere.size = 1, threshold = 0.01,
             speed = 1, fov = 60, fit = "linear", 
             groups = NULL, parallel = TRUE, model.summary = FALSE,
-            squares=FALSE, square.color="gray", coef.ratio=1)
+            squares=FALSE, square.color="gray", coef.ratio=1, ...)
 {
     require(rgl)
     require(mgcv)

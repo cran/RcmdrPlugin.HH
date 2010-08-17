@@ -31,7 +31,7 @@ scatter3d.HH(x, y, z,
     grid.lines=26, df.smooth=NULL, df.additive=NULL,
     sphere.size=1, threshold=0.01, speed=1, fov=60,
     fit="linear", groups=NULL, parallel=TRUE, model.summary=FALSE,
-    squares = FALSE, square.color = "gray", coef.ratio = 1)
+    squares = FALSE, square.color = "gray", coef.ratio = 1, ...)
 }
 \note{
 You have to install the \code{rgl} and \code{mgcv} packages to produce 3D plots. 
@@ -100,7 +100,8 @@ You have to install the \code{rgl} and \code{mgcv} packages to produce 3D plots.
     reason for displaying non-least-squares residuals is to compare them
     to the least-squares residuals and thus get a 3d visual image of
     what minimizing the sum of squares actually means.}
-}
+  
+ \item{\dots}{other arguments are ignored.}}
 
 \value{
   \code{scatter3d} not return a useful value; it is used for its side-effect of
