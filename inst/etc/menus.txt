@@ -25,9 +25,12 @@
     item    chisqMenu       command         "Plot chi-squared hypotheses... (HH)"              ChisqHypothesesPlot   ""          "" ##HH
     item    graphsMenu      command         "Dotplot with stacked multiple hits... (HH)"         DotplottbRcmdr           "numericP()" "" ##HH
     item    toolsMenu       command         "Large Font for Projectors (HH)"               Projector                   ""              "" ##HH
+    item    toolsMenu       command         "Small Font for 600 pixel height netbook (HH)"    H600                   ""              "" ##HH
     item    toolsMenu       command         "R options (HH)"               R_options                   ""              "" ##HH
     item    graphsMenu      command         "Scatterplot.HH... (HH)"                                scatterPlot.HH                 "numericP(2)" "packageAvailable('car')"
     item    graphsMenu      command         "Squared Residuals... (HH)"                                Regr1Plot                 "numericP(2)" "packageAvailable('graphics')"
     item    modelsGraphsMenu      command         "MMC Plot... (HH)"                       MMCmenu                "AOVModelsP()" "" ##HH
     item    exitMenu        command         "From Commander and restart Commander"                     CloseCommanderRestart              ""          ""
     item    exitMenu        command         "From Commander and restart Commander, no questions"      CloseCommanderNoQuestionRestart              ""          ""
+    item    graphsMenu      command         "plot.likert..."            PlotLikertDialog    "length(listAllLikertCapable(all=TRUE))>0"   "" ##HH
+    item    graphsMenu      command         "Resize lattice plots..."   ResizeEtcDialog     "length(listAllTrellisObjects(all=TRUE))>0"  "" ##HH

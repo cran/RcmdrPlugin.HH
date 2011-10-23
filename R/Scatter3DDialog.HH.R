@@ -80,7 +80,7 @@ function(){
             }
         else groups <- parallel <- ""
         if (tclvalue(rglOpen) == 1) doItAndPrint("rgl.open()")
-        command <- paste("scatter3d.HH(", .activeDataSet, "$", x[1], ", ", 
+        command <- paste("scatter3dHH(", .activeDataSet, "$", x[1], ", ", 
             .activeDataSet, "$", y, ", ", .activeDataSet, "$", x[2], fit, dfNonpar, 
             dfAdd, groups, parallel, ', bg="', bg, '", grid=', grid,
                          ', squares=', resid=="square", betaMultiplier,

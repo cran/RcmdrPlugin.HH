@@ -1,4 +1,4 @@
-"scatter3d.HH" <-
+"scatter3dHH" <-
 function (x, y, z,
             xlab = deparse(substitute(x)),
             ylab = deparse(substitute(y)), 

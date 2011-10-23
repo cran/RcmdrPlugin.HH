@@ -1,5 +1,7 @@
-\name{Rcmdr.HH-package}
+\name{RcmdrPlugin.HH-package}
+\alias{RcmdrPlugin.HH-package}
 \alias{Rcmdr.HH-package}
+\alias{RcmdrPlugin.HH}
 \alias{Rcmdr.HH}
 \docType{package}
 \title{
@@ -35,7 +37,7 @@ License: \tab GPL version 2 or newer?\cr
 
 \code{\link{anovaTableI.HH}} Sequential sums of squares on the Rcmdr menu.
 
-\code{\link{scatter3d.HH}} add the ability to plot squared residuals.
+\code{\link{scatter3dHH}} add the ability to plot squared residuals.
 The squared residuals have been adopted into \code{Rcmdr}.  This
 interface offers a checkbox for a new 3D window and an option to
 draw a non-least-squares plane for pedagogical comparison.

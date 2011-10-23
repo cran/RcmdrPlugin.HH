@@ -1,5 +1,5 @@
-\name{scatter3d.HH}
-\alias{scatter3d.HH}
+\name{scatter3dHH}
+\alias{scatter3dHH}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Three-Dimensional Scatterplots and Point Identification}
 \description{
@@ -16,7 +16,7 @@
   This is a revision of the \code{Rcmdr} \code{scatter3d} to add the 
 ability to plot squared residuals.}
 \usage{
-scatter3d.HH(x, y, z, 
+scatter3dHH(x, y, z, 
     xlab=deparse(substitute(x)), ylab=deparse(substitute(y)),
     zlab=deparse(substitute(z)),
     revolutions=0, bg.col=c("white", "black"), 
