@@ -3,7 +3,7 @@ listAllLikertCapable <- function (envir = .GlobalEnv, ...)
     objects <- ls(envir = envir, ...)
     if (length(objects) == 0) 
         NULL
-    else objects[sapply(objects, function(x) is.likert.capable(get(x)))]
+    else objects[sapply(objects, function(x) is.likertCapable(get(x)))]
 }
 
 

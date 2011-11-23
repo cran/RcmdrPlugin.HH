@@ -1,4 +1,5 @@
-6904d58dc07aeff641e1f959eda9ada9 *DESCRIPTION
+4c21bdd47bd801681946c01d3ec90f19 *DESCRIPTION
+fef8ea6bf6af68e3ebaf0804e85ae2ce *NAMESPACE
 1dd8bafdf750c8f47022b45c0cd85fd0 *R/BoxCox.R
 e15ecacaace09ae6519c956e2959a5b7 *R/ChisqHypothesesPlot.R
 40f72b6e6523049d57fae0a95b0797ae *R/Dotplot.tb.R
@@ -21,7 +22,7 @@ bdea8ce662b114dbcae4660b2abba5eb *R/anovaTableII.R
 f8f6c1b9242b6481e9becfa86c173f8f *R/closeRcmdr.R
 b07c56b8a4e836c0ebfe4652850eb92d *R/confidenceIntervalsPlot.R
 ffa76ee62d453d10ead47a01b265a05f *R/enterTable.HH.R
-e99614c62d008700eac3481cca1cb036 *R/likert.R
+3763c7367a76590367d2d594218fcea1 *R/likert.R
 6832b6b5b2401548936aa0cec8991c1a *R/normal.and.t.hypotheses.plot.R
 c0c7d95815ff4b1e405fa42c92ab8c76 *R/scatter3d.HH.R
 4a97754f9278843acc0588950fc119f2 *R/scatterPlotMatrix.HH.R
