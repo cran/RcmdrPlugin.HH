@@ -16,8 +16,7 @@ function(){
 
         ## .Table <- data.matrix(ActiveDataSet())
         command <- ActiveDataSet()
-        logger(paste(".Table <- ", command, sep=""))
-        assign(".Table", justDoIt(command), envir=.GlobalEnv)
+        justDoIt(paste(".Table <- ", command, sep=""))
         doItAndPrint(".Table")
 
         if (rowPct == 1) doItAndPrint("rowPercents(.Table) # Row Percentages")
@@ -26,8 +25,7 @@ function(){
 
         if (chisq == 1) {
             command <- "chisq.test(.Table, correct=FALSE)"
-            logger(paste(".Test <- ", command, sep=""))
-            assign(".Test", justDoIt(command), envir=.GlobalEnv)
+            justDoIt(paste(".Test <- ", command, sep=""))
             doItAndPrint(".Test")
             if (chisqComp == 1) doItAndPrint("round(.Test$residuals^2, 2) # Chi-square Components")
             if (chiComp == 1) doItAndPrint("round(.Test$residuals, 2) # Chi Components (residuals)")
@@ -43,8 +41,7 @@ function(){
             remove(.Test, envir=.GlobalEnv) 
             }
         if (fisher == 1) doItAndPrint("fisher.test(.Table)")
-        logger("remove(.Table)") 
-        remove(.Table, envir=.GlobalEnv)                                                      
+
         tkfocus(CommanderWindow())
         }
     OKCancelHelp(helpSubject="chisq.test")

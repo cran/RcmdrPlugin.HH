@@ -55,8 +55,7 @@ function(){
             }
         command <- paste("lm(", y, "~", paste(x, collapse="+"),
             ", data=", ActiveDataSet(), subset, ")", sep="")
-        logger(paste(modelValue, " <- ", command, sep=""))
-        assign(modelValue, justDoIt(command), envir=.GlobalEnv)
+        justDoIt(paste(modelValue, " <- ", command, sep=""))
         doItAndPrint(paste("summary(", modelValue, ")", sep=""))
         activeModel(modelValue)
         doItAndPrint(paste("ci.plot(", modelValue, ")", sep=""))

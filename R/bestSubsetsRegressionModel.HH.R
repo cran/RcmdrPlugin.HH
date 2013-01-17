@@ -79,13 +79,11 @@ function(){
                          ", data=", ActiveDataSet(), subset,
                          ", nbest=", nbestValue,
                          ")", sep="")
-        logger(paste(subsetsValue, " <- ", command, sep=""))
-        assign(subsetsValue, justDoIt(command), envir=.GlobalEnv)
+        justDoIt(paste(subsetsValue, " <- ", command, sep=""))
 
         command <- paste("summary_HH(", subsetsValue, ")", sep="")
         summaryValue <- paste(subsetsValue, "Summary", sep=".")
-        logger(paste(summaryValue, " <- ", command, sep=""))
-        assign(summaryValue, justDoIt(command), envir=.GlobalEnv)
+        justDoIt(paste(summaryValue, " <- ", command, sep=""))
         ## summaries <-
         doItAndPrint(summaryValue)
 
@@ -99,8 +97,7 @@ function(){
         modelValue <- paste(trim.blanks(tclvalue(modelName)), .nmax, sep=".")
 
         command <- paste("lm.regsubsets(", subsetsValue, ", ", .nmax, ")", sep="")
-        logger(paste(modelValue, " <- ", command, "  ## subset ", .nmax, " has largest adjr2", sep=""))
-        assign(modelValue , justDoIt(command), envir=.GlobalEnv)
+        justDoIt(paste(modelValue, " <- ", command, "  ## subset ", .nmax, " has largest adjr2", sep=""))
         doItAndPrint(paste("summary(", modelValue, ")", sep=""))
 
         activeModel(modelValue)

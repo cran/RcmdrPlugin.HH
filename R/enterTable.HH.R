@@ -91,8 +91,7 @@ function(){
 
         command <- paste("matrix(c(", paste(counts, collapse=","), "), ", nrows, ", ", ncols,
             ", byrow=TRUE)", sep="")
-        assign(".Table", justDoIt(command), envir=.GlobalEnv)
-        logger(paste(".Table <- ", command, sep=""))
+        justDoIt(paste(".Table <- ", command, sep=""))
         command <- paste("c(",paste(paste("'", row.names, "'", sep=""), collapse=", "), ")", sep="")
         justDoIt(paste("rownames(.Table) <- ", command, sep=""))
         logger(paste("rownames(.Table) <- ", command, sep=""))
@@ -108,8 +107,7 @@ function(){
  
         if (chisq == 1) {
             command <- "chisq.test(.Table, correct=FALSE)"
-            logger(paste(".Test <- ", command, sep=""))
-            assign(".Test", justDoIt(command), envir=.GlobalEnv)
+            justDoIt(paste(".Test <- ", command, sep=""))
             doItAndPrint(".Test")
             if (chisqComp == 1) doItAndPrint("round(.Test$residuals^2, 2) # Chi-square Components")
             if (chiComp == 1) doItAndPrint("round(.Test$residuals, 2) # Chi Components (residuals)")
@@ -122,12 +120,8 @@ function(){
                 gettextRcmdr(" expected frequencies are less than 5"), sep="")
             if (!is.null(warnText)) Message(message=warnText,
                 type="warning")
-            logger("remove(.Test)") 
-            remove(.Test, envir=.GlobalEnv) 
             }
         if (fisher == 1) doItAndPrint("fisher.test(.Table)")
-        logger("remove(.Table)") 
-        remove(.Table, envir=.GlobalEnv)                                                      
         tkfocus(CommanderWindow())
         }
     OKCancelHelp(helpSubject="chisq.test")

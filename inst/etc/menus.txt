@@ -1,7 +1,7 @@
 # R Commander Menu Definitions
 
 # based on Rcmdr 1.3-0 last modified 7 May 2007 by J. Fox
-# last modified 12 Mar 2008 by Richard M. Heiberger
+# last modified 26 Dec 2012 by Richard M. Heiberger
 
 
 #   type    menu/item      operation/parent  label                                          command/menu                activation  install?
@@ -12,10 +12,17 @@
     item    modelsMenu      command         "Best subsets regression... (HH)"               bestSubsetsRegressionModel.HH  "numericP(2)" "packageAvailable('leaps')" ##HH
     item    modelsMenu      command         "Confidence interval Plot..."                   confidenceIntervalsPlot     "numericP(2)" "" ##HH
     item    modelsMenu      command         "Prediction Intervals... (HH)"                       PredictModel                "activeModelP()" "" ##HH
-    item    graphsMenu      command         "Quantile-comparison plot with test..."         QQPlot.HH                   "numericP()" "packageAvailable('car')" ##HH
+    item    graphsMenu      command         "Scatterplot.HH... (HH)"                                scatterPlot.HH                 "numericP(2)" "packageAvailable('car')"
     item    graphsMenu      command         "Scatterplot matrix... (HH)"                    scatterPlotMatrix.HH        "numericP(3)" "packageAvailable('car')" ##HH uses 'row1attop=FALSE'
-    item    graphsMenu      command         "Plot of two-way interactions... (HH)"               Interaction2wtRcmdr       "numericP() && factorsP(2)" "" ##HH
     item    graphsMenu      command         "XY conditioning plot... (HH)"                  Xyplot.HH                    "numericP(2)" "" ##HH
+    item    graphsMenu      command         "lattice plot... (HH)"      Xyplot.HH2          "numericP(1)"                                "" ##HH
+    item    graphsMenu      command         "likert plot (formula)... (HH)"      LikertFormula          "numericP(1)"                                "" ##HH
+##  item    graphsMenu      command         "plot.likert..."            PlotLikertDialog    "length(listAllLikertCapable(all=TRUE))>0"   "" ##HH
+    item    graphsMenu      command         "Resize lattice plots..."   ResizeEtcDialog     "length(listAllTrellisObjects(all=TRUE))>0"  "" ##HH
+    item    graphsMenu      command         "Plot of two-way interactions... (HH)"               Interaction2wtRcmdr       "numericP() && factorsP(2)" "" ##HH
+    item    graphsMenu      command         "Dotplot with stacked multiple hits... (HH)"         DotplottbRcmdr           "numericP()" "" ##HH
+    item    graphsMenu      command         "Squared Residuals... (HH)"                                Regr1Plot                 "numericP(2)" "packageAvailable('graphics')"
+    item    graphsMenu      command         "Quantile-comparison plot with test..."         QQPlot.HH                   "numericP()" "packageAvailable('car')" ##HH
     item    ThreeDPlotMenu  command         "3D scatterplot... (HH)"                             Scatter3DDialog.HH                "numericP(3)" "packageAvailable('rgl')" ##HH
     item    hypothesisMenu  command         "ANOVA table (Type II Sums of Squares)"         anovaTableII.HH                  "activeModelP()" "packageAvailable('car')" ##HH
     item    hypothesisMenu  command         "ANOVA table (Type I Sums of Squares)"          anovaTableI.HH              "activeModelP()" ""
@@ -23,14 +30,9 @@
     item    tMenu           command         "Plot hypotheses or Confidence Intervals... (HH)"               normal.and.t.hypotheses.plot             ""          "" ##HH
     item    FMenu           command         "Plot F hypotheses... (HH)"                   FHypothesesPlot             ""          "" ##HH
     item    chisqMenu       command         "Plot chi-squared hypotheses... (HH)"              ChisqHypothesesPlot   ""          "" ##HH
-    item    graphsMenu      command         "Dotplot with stacked multiple hits... (HH)"         DotplottbRcmdr           "numericP()" "" ##HH
     item    toolsMenu       command         "Large Font for Projectors (HH)"               Projector                   ""              "" ##HH
     item    toolsMenu       command         "Small Font for 600 pixel height netbook (HH)"    H600                   ""              "" ##HH
     item    toolsMenu       command         "R options (HH)"               R_options                   ""              "" ##HH
-    item    graphsMenu      command         "Scatterplot.HH... (HH)"                                scatterPlot.HH                 "numericP(2)" "packageAvailable('car')"
-    item    graphsMenu      command         "Squared Residuals... (HH)"                                Regr1Plot                 "numericP(2)" "packageAvailable('graphics')"
     item    modelsGraphsMenu      command         "MMC Plot... (HH)"                       MMCmenu                "AOVModelsP()" "" ##HH
     item    exitMenu        command         "From Commander and restart Commander"                     CloseCommanderRestart              ""          ""
     item    exitMenu        command         "From Commander and restart Commander, no questions"      CloseCommanderNoQuestionRestart              ""          ""
-    item    graphsMenu      command         "plot.likert..."            PlotLikertDialog    "length(listAllLikertCapable(all=TRUE))>0"   "" ##HH
-    item    graphsMenu      command         "Resize lattice plots..."   ResizeEtcDialog     "length(listAllTrellisObjects(all=TRUE))>0"  "" ##HH
