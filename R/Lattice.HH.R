@@ -5,7 +5,6 @@
 ## Extensions to barchart function by Richard Heiberger 2009-11-29
 ## 2012-08-19 rmh added memory to the dialogs, using John Fox's getDialog and putDialog functions
 
-## require("vcd")
 
 Xyplot.HH2 <- function() {
   Library("lattice")
@@ -259,7 +258,6 @@ Xyplot.HH2 <- function() {
       ""
     else
       paste(", data=", .activeDataSet)
-
     xyplot.command <- paste(functionFormula,
                             if (length(conditions) > 0)
                             paste(" |",
@@ -273,6 +271,7 @@ Xyplot.HH2 <- function() {
                             horizontal.command,
                             ", par.settings=simpleTheme(pch=16)",
                             panel.command,
+                            if (functionName == "barchart"  || panelName == "panel.barchart") ", origin=0" else "",
                             if (auto.key) ", auto.key=list(border=TRUE)" else "",
                             paste(", scales=list(x=list(relation='",
                                   x.relation,
@@ -282,6 +281,7 @@ Xyplot.HH2 <- function() {
                             ')', sep="")
 
     doItAndPrint(xyplot.command)
+
     activateMenus()
     tkfocus(CommanderWindow())
   }

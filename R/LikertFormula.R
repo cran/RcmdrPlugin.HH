@@ -18,14 +18,23 @@ LikertFormula <- function() {
                    initial.boxWidthValue = "",
                    initial.boxWidthUnitValue = "mm",
                    initial.ReferenceZeroValue = "",
-                   initial.BrewerPaletteName = "",
+##                   initial.BrewerPaletteName = "",
                    initial.xlabName = "",
                    initial.ylabName = "",
                    initial.subName = "",
-                   initial.conditions = FALSE,
+                   initial.resizewidthName = "",
+                   initial.resizeheightName = "",
+                   initial.conditions = 0,
                    initial.horizontal = 1,
                    initial.as.percent = 0,
-                   initial.positive.order=0)
+                   initial.rowsort = "levels",
+                   initial.reverse = 1,
+                   initial.relationx = "same",
+                   initial.relationy = "same",
+                   initial.strip = 1,
+                   initial.strip.left = 0,
+                   initial.useOuterStrips=0,
+                   initial.combineLimits=0)
   dialog.values <- getDialog("LikertFormula", defaults)
 
   initializeDialog(title=gettextRcmdr("Likert Formula"))
@@ -36,7 +45,7 @@ LikertFormula <- function() {
 
   response.if <-
     (length(dialog.values$initial.response) == 1 &&
-     dialog.values$initial.response == FALSE) ||
+     dialog.values$initial.response == 0) ||
        length(dialog.values$initial.response) == 0
   responseBox <- variableListBox(predictorFrame, ngad[ngad %in% Factors()],
                                  title=gettextRcmdr("Response variables (pick zero or one) ~ "),
@@ -53,18 +62,43 @@ LikertFormula <- function() {
     length(dialog.values$initial.conditions) == 1 &&
       dialog.values$initial.conditions == FALSE
   conditionsBox <- variableListBox(predictorFrame, ngad[ngad %in% Factors()],   ## cgFrame
-                                   title=gettextRcmdr("Conditions (pick zero or one)"),
-                                   selectmode="single",
+                                   title=gettextRcmdr("Conditions (pick zero or more)"),
+                                   selectmode="multiple",
                                    initialSelection=if (conditions.if) FALSE else
                                    varPosnOriginal(dialog.values$initial.conditions, "factor"))
 
   checkBoxes(frame="optionsFrame",
-             boxes=c("horizontal","as.percent","positive.order"),
+             boxes=c("horizontal","as.percent", "reverse","strip","strip.left","useOuterStrips","combineLimits"),
              initialValues=c(
                dialog.values$initial.horizontal,
                dialog.values$initial.as.percent,
-               dialog.values$initial.positive.order), ##c(1, 0, 0),
-             labels=gettextRcmdr(c("Horizontal Bars", "Plot Percents", "Sort by Total Positive")))
+               dialog.values$initial.reverse, ##c(1, 0, 1),
+               dialog.values$initial.strip, ## 1
+               dialog.values$initial.strip.left, ## 0
+               dialog.values$initial.useOuterStrips, ## 0
+               dialog.values$initial.combineLimits), ## 0
+             labels=gettextRcmdr(c("Horizontal Bars", "Plot Percents", "Reverse Row Order",
+               "Strip","Strip Left", "useOuterStrips", "combineLimits")))
+
+  rowsortFrame <- tkframe(top)
+  relationxFrame <- tkframe(top)
+  relationyFrame <- tkframe(top)
+  radioButtons(name="rowsort",
+               buttons=c("levels", "positive.order", "data.order"),
+               labels=gettextRcmdr(c("levels", "positive.order", "data.order")),
+               title=gettextRcmdr("Row Sort Sequence"),
+               initialValue = dialog.values$initial.rowsort)
+
+  radioButtons(name="relationx",
+               buttons=c("same", "free", "sliced"),
+               labels=gettextRcmdr(c("same", "free", "sliced")),
+               title=gettextRcmdr("x relation"),
+               initialValue = dialog.values$initial.relationx)
+  radioButtons(name="relationy",
+               buttons=c("same", "free", "sliced"),
+               labels=gettextRcmdr(c("same", "free", "sliced")),
+               title=gettextRcmdr("y relation"),
+               initialValue = dialog.values$initial.relationy)
 
   scalarsFrame <- tkframe(top)
   layoutColumnsVar <- tclVar(dialog.values$initial.layoutColumns)
@@ -85,14 +119,27 @@ LikertFormula <- function() {
 
   ReferenceZeroVar   <- tclVar(dialog.values$initial.ReferenceZeroValue)
   ReferenceZeroEntry <- tkentry(likertFrame, width="16", textvariable=ReferenceZeroVar)
-  BrewerPaletteVar   <- tclVar(dialog.values$initial.BrewerPaletteName)
-  BrewerPaletteEntry <- tkentry(likertFrame, width="16", textvariable=BrewerPaletteVar)
+##  BrewerPaletteVar   <- tclVar(dialog.values$initial.BrewerPaletteName)
+##  BrewerPaletteEntry <- tkentry(likertFrame, width="16", textvariable=BrewerPaletteVar)
   xlabVar   <- tclVar(dialog.values$initial.xlabName)
   xlabEntry <- tkentry(likertFrame, width="16", textvariable=xlabVar)
   ylabVar   <- tclVar(dialog.values$initial.ylabName)
   ylabEntry <- tkentry(likertFrame, width="16", textvariable=ylabVar)
   subVar   <- tclVar(dialog.values$initial.subName)
   subEntry <- tkentry(likertFrame, width="16", textvariable=subVar)
+  resizewidthVar   <- tclVar(dialog.values$initial.resizewidthName)
+  resizewidthEntry <- tkentry(likertFrame, width="16", textvariable=resizewidthVar)
+  resizeheightVar   <- tclVar(dialog.values$initial.resizeheightName)
+  resizeheightEntry <- tkentry(likertFrame, width="16", textvariable=resizeheightVar)
+
+  ## relationFrame <- tkframe(top)
+  ## relationxVar   <- tclVar(dialog.values$initial.relationxName)
+  ## relationxEntry <- tkentry(relationFrame, width="16", textvariable=relationxVar)
+  ## relationyVar   <- tclVar(dialog.values$initial.relationyName)
+  ## relationyEntry <- tkentry(relationFrame, width="16", textvariable=relationyVar)
+  ## tkgrid(getFrame(relationxEntry), getFrame(relationyEntry),
+  ##        columnspan=1, sticky="w")
+  ## tkgrid(relationFrame, sticky="w")
 
   onOK <- function() {
     predictor <- getSelection(predictorBox)
@@ -110,7 +157,12 @@ LikertFormula <- function() {
     }
     horizontal <-     ("1" == tclvalue(horizontalVariable))
     as.percent <-     ("1" == tclvalue(as.percentVariable))
-    positive.order <- ("1" == tclvalue(positive.orderVariable))
+    reverse    <-     ("1" == tclvalue(reverseVariable))
+    strip      <-     ("1" == tclvalue(stripVariable))
+    strip.left <-     ("1" == tclvalue(strip.leftVariable))
+    useOuterStrips <-     ("1" == tclvalue(useOuterStripsVariable))
+    combineLimits <-     ("1" == tclvalue(combineLimitsVariable))
+    rowsort <- as.character(tclvalue(rowsortVariable))
 
     layoutColumns  <- as.numeric(tclvalue(layoutColumnsVar))
     layoutRows     <- as.numeric(tclvalue(layoutRowsVar))
@@ -121,10 +173,14 @@ LikertFormula <- function() {
     boxWidthValue  <- tclvalue(boxWidthNumberVar)
     boxWidthUnitValue  <- tclvalue(boxWidthUnitVar)
     ReferenceZeroValue  <- tclvalue(ReferenceZeroVar)
-    BrewerPaletteName  <- tclvalue(BrewerPaletteVar)
+##    BrewerPaletteName  <- tclvalue(BrewerPaletteVar)
     xlabName  <- tclvalue(xlabVar)
     ylabName  <- tclvalue(ylabVar)
     subName   <- tclvalue(subVar)
+    resizewidthName   <- tclvalue(resizewidthVar)
+    resizeheightName   <- tclvalue(resizeheightVar)
+    relationx <- as.character(tclvalue(relationxVariable))
+    relationy <- as.character(tclvalue(relationyVariable))
 
     putDialog ("LikertFormula", list(initial.predictor = predictor,
                                      initial.response = response,
@@ -135,14 +191,23 @@ LikertFormula <- function() {
                                      initial.boxWidthValue = boxWidthValue,
                                      initial.boxWidthUnitValue = boxWidthUnitValue,
                                      initial.ReferenceZeroValue = ReferenceZeroValue,
-                                     initial.BrewerPaletteName = BrewerPaletteName,
+##                                     initial.BrewerPaletteName = BrewerPaletteName,
                                      initial.xlabName = xlabName,
                                      initial.ylabName = ylabName,
                                      initial.subName = subName,
+                                     initial.resizewidthName = resizewidthName,
+                                     initial.resizeheightName = resizeheightName,
                                      initial.conditions = if (length(conditions) != 0) conditions else FALSE,
                                      initial.horizontal = horizontal,
                                      initial.as.percent = as.percent,
-                                     initial.positive.order=positive.order
+                                     initial.rowsort=rowsort,
+                                     initial.reverse = reverse,
+                                     initial.relationx = relationx,
+                                     initial.relationy = relationy,
+                                     initial.strip = strip,
+                                     initial.strip.left = strip.left,
+                                     initial.useOuterStrips = useOuterStrips,
+                                     initial.combineLimits = combineLimits
                                      )
                )
 
@@ -172,9 +237,12 @@ LikertFormula <- function() {
       layout.command,
       data.command,
       if (!horizontal)
-      paste(", horizontal=FALSE, auto.key=list(reverse=TRUE, space='right', columns=1, padding.text=2)"),
-      if (as.percent) paste(", as.percent=TRUE"),
-      if (positive.order) paste(", positive.order=TRUE"),
+      ", horizontal=FALSE, auto.key=list(reverse=TRUE, space='right', columns=1, padding.text=2)",
+      if (as.percent) ", as.percent=TRUE",
+      if (as.percent && length(conditions) > 1) ", rightAxis=FALSE",
+      if (rowsort=="positive.order") ", positive.order=TRUE",
+      if (rowsort=="data.order") ", data.order=TRUE",
+      if (!reverse) ", reverse=FALSE",
       if (nchar(main) != 0) paste(", main='", main, "'", sep=""),
       if (nchar(boxWidthValue) != 0) paste(
                  ", box.width=unit(", boxWidthValue,
@@ -182,17 +250,47 @@ LikertFormula <- function() {
       ", par.settings=simpleTheme(pch=16)",
       if (nchar(ReferenceZeroValue) != 0) paste(
                  ", ReferenceZero=", ReferenceZeroValue, sep=""),
-      if (nchar(BrewerPaletteName) != 0) paste(
-                 ", BrewerPaletteName='", BrewerPaletteName, "'", sep=""),
-      if (nchar(xlabName) != 0) paste(
-                 ", xlab='", xlabName, "'", sep=""),
-      if (nchar(ylabName) != 0) paste(
-                 ", ylab='", ylabName, "'", sep=""),
+##      if (nchar(BrewerPaletteName) != 0) paste(
+##                 ", BrewerPaletteName='", BrewerPaletteName, "'", sep=""),
+      if (nchar(xlabName) != 0) {
+        if (xlabName == "NULL")
+          ", xlab=NULL"
+        else
+          paste(", xlab='", xlabName, "'", sep="")
+      },
+      if (nchar(ylabName) != 0) {
+        if (ylabName == "NULL")
+          ", ylab=NULL"
+        else
+          paste(", ylab='", ylabName, "'", sep="")
+      },
       if (nchar(subName) != 0) paste(
                  ", sub='", subName, "'", sep=""),
-      ')', sep="")
+      ", scales=list(x=list(relation='", relationx, "'), y=list(relation='", relationy, "'))",
+      if (nchar(resizewidthName)  != 0) {
+        if (resizewidthName == "rowSums")
+          resizewidthName <-  paste("rowSums(", .activeDataSet, "[,", deparse(predictor, width.cutoff=500), "])", sep="")
+        if (resizewidthName != "nrow") paste(", w.resizePanels=", resizewidthName, sep="")
+      },
+      if (nchar(resizeheightName) != 0) {
+        if (resizeheightName == "rowSums")
+          resizeheightName <- paste("rowSums(", .activeDataSet, "[,", deparse(predictor, width.cutoff=500), "])", sep="")
+        if (resizeheightName != "nrow") paste(", h.resizePanels=", resizeheightName, sep="")
+      },
+
+      paste(", strip=", strip, sep=""),
+      paste(", strip.left=", strip.left, sep=""),
+      ")",
+      sep="")
 
     doItAndPrint(likert.command)
+    if (combineLimits || useOuterStrips) {
+      StripsLimits <- LikertPlotName
+      if (useOuterStrips) StripsLimits <- paste("useOuterStrips(", StripsLimits, ")", sep="")
+      if (combineLimits) StripsLimits <- paste("combineLimits(", StripsLimits, ")", sep="")
+      StripsLimits <- paste(LikertPlotName, "<-", StripsLimits)
+      doItAndPrint(StripsLimits)
+    }
     doItAndPrint(LikertPlotName)
     activateMenus()
 
@@ -209,19 +307,25 @@ LikertFormula <- function() {
   tkgrid(tklabel(top, text=gettextRcmdr("Options"), fg="blue"), sticky="w")
   tkgrid(optionsFrame, sticky="w")
 
+  tkgrid(rowsortFrame, sticky="w")
+  tkgrid(relationxFrame, sticky="w")
+  tkgrid(relationyFrame, sticky="w")
+
+  tkgrid(tklabel(top, text=gettextRcmdr("Labels"), fg="blue"), sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("Main title:")), mainEntry, sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("LikertPlot Name:")), LikertPlotNameEntry, sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("box.width:")), boxWidthNumberEntry, sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("box.width unit:")), boxWidthUnitEntry, sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("ReferenceZero:")),  ReferenceZeroEntry   , sticky="w")
-  tkgrid(tklabel(likertFrame, text=gettextRcmdr("RColorBrewerPalette:")),  BrewerPaletteEntry   , sticky="w")
+##  tkgrid(tklabel(likertFrame, text=gettextRcmdr("RColorBrewerPalette:")),  BrewerPaletteEntry   , sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("x label:")),  xlabEntry   , sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("y label:")),  ylabEntry   , sticky="w")
   tkgrid(tklabel(likertFrame, text=gettextRcmdr("subtitle:")),  subEntry   , sticky="w")
+  tkgrid(tklabel(likertFrame, text=gettextRcmdr("Resize Width:")),  resizewidthEntry   , sticky="w")
+  tkgrid(tklabel(likertFrame, text=gettextRcmdr("Resize Height:")),  resizeheightEntry   , sticky="w")
   tkgrid(likertFrame, sticky="w")
 
-  tkgrid(tklabel(top, text=gettextRcmdr("Layout"), fg="blue"),
-         sticky="w")
+  tkgrid(tklabel(top, text=gettextRcmdr("Layout"), fg="blue"), sticky="w")
   tkgrid(tklabel(scalarsFrame, text=gettextRcmdr("number of columns:")), layoutColumnsEntry, sticky="w")
   tkgrid(tklabel(scalarsFrame, text=gettextRcmdr("number of rows:")), layoutRowsEntry, sticky="w")
   tkgrid(scalarsFrame, sticky="w")

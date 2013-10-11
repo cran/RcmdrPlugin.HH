@@ -1,6 +1,5 @@
 "enterTable.HH" <-
 function(){
-    require("abind")
     env <- environment()
     initializeDialog(title=gettextRcmdr("Enter Two-Way Table"))
     outerTableFrame <- tkframe(top)

@@ -2,6 +2,12 @@
 
 exportPattern(".")
 
+import(rgl)
+##importFrom(rgl, rgl.clear, rgl.bringtotop, rgl.cur)
 import(Rcmdr)
-
-importFrom(tcltk)
+import(HH)
+import(lattice)
+import(latticeExtra)
+importFrom(tcltk, tkbutton)
+importFrom(leaps)
+importFrom(multcomp)

@@ -1,6 +1,5 @@
 "bestSubsetsRegressionModel.HH" <-
 function(){
-    require("leaps")
     initializeDialog(title=gettextRcmdr("Best Subsets Regression"))
     variablesFrame <- tkframe(top)
     .numeric <- Numeric()

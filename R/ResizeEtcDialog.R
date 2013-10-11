@@ -1,5 +1,4 @@
 ResizeEtcDialog <- function() {
-    ## require("lattice")
     initializeDialog(title=gettextRcmdr("Resize Panels"))
     resizeFrame <- tkframe(top)
 
@@ -78,7 +77,7 @@ ResizeEtcDialog <- function() {
       doItAndPrint(command)
       activateMenus()
       tkfocus(CommanderWindow())
-      justDoIt("bringToTop()")
+      if (version$os == "mingw32") justDoIt("bringToTop()")
     }
     OKCancelHelp(helpSubject="ResizeEtcDialog")
     tkgrid(tklabel(resizeFrame, text=gettextRcmdr("c.list:")),            c.listEntry           , sticky="w")
@@ -92,8 +91,8 @@ ResizeEtcDialog <- function() {
     tkgrid(tklabel(resizeFrame, text=gettextRcmdr("strip.left.par:")),    strip.left.parEntry   , sticky="w")
     tkgrid(tklabel(resizeFrame, text=gettextRcmdr("resize.height:")),     resize.heightEntry    , sticky="w")
     tkgrid(tklabel(resizeFrame, text=gettextRcmdr("resize.width:")),      resize.widthEntry     , sticky="w")
-    tkgrid(tklabel(resizeFrame, text=gettextRcmdr("main:")),              mainEntry             , sticky="w") 
-    tkgrid(tklabel(resizeFrame, text=gettextRcmdr("mainMiddle:")),        mainMiddleEntry       , sticky="w") 
+    tkgrid(tklabel(resizeFrame, text=gettextRcmdr("main:")),              mainEntry             , sticky="w")
+    tkgrid(tklabel(resizeFrame, text=gettextRcmdr("mainMiddle:")),        mainMiddleEntry       , sticky="w")
     tkgrid(resizeFrame, sticky="w")
 
 
@@ -104,7 +103,7 @@ ResizeEtcDialog <- function() {
 
 listAllTrellisObjects <- function (envir = .GlobalEnv, ...) {
     objects <- ls(envir = envir, ...)
-    if (length(objects) == 0) 
+    if (length(objects) == 0)
         return(NULL)
     objects[sapply(objects, function(.x) {
         "trellis" %in% class(get(.x, envir = envir))

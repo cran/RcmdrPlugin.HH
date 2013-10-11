@@ -1,5 +1,4 @@
 scatterPlot.HH <- function(){
-    require("car")
     initializeDialog(title=gettextRcmdr("Scatterplot.HH"))
     .numeric <- Numeric()
     variablesFrame <- tkframe(top)

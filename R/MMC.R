@@ -47,7 +47,7 @@ MMCmenu <- function() {
       command0<- paste("old.omd <- par(omd=c(0, ", right.omd, ", 0,1))", sep="")
       doItAndPrint(command0)
 
-      command1 <- paste(model, ".mmc <- glht.mmc(", model,
+      command1 <- paste(model, ".mmc <- mmc(", model,
                         focus.and.lmatrows, ")", sep="")
 
       doItAndPrint(command1)
@@ -82,7 +82,7 @@ MMCmenu <- function() {
 
       if (tclvalue(tieVariable)=="1") {
         command4 <-
-          paste("plot.matchMMC(", model, ".mmc$mca, xlabel.print=FALSE)",
+          paste("plotMatchMMC(", model, ".mmc$mca, xlabel.print=FALSE)",
                 sep="")
         doItAndPrint(command4)
       }

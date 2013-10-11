@@ -1,6 +1,5 @@
 "Interaction2wtRcmdr" <-
 function() {
-    ## require("HH")
     if (length(grep("HH", search()))==0) stop("Please attach the HH directory.")
     initializeDialog(title=gettextRcmdr("Interaction twoway table"))
     groupBox <- variableListBox(top, Factors(), title=gettextRcmdr("Factors (pick two or more)"), selectmode="multiple")

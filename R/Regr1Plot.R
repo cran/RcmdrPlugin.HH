@@ -1,5 +1,4 @@
 Regr1Plot <- function() {
-    require("graphics")
     initializeDialog(title=gettextRcmdr("Squared Residuals"))
     .numeric <- Numeric()
     variablesFrame <- tkframe(top)

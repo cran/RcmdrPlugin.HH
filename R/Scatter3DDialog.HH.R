@@ -1,7 +1,5 @@
 "Scatter3DDialog.HH" <-
 function(){
-    use.rgl <- options("Rcmdr")[[1]]$use.rgl
-    if (length(use.rgl) == 0 || use.rgl) require(rgl)    
     initializeDialog(title=gettextRcmdr("3D Scatterplot"))
     variablesFrame <- tkframe(top)
     .numeric <- Numeric()

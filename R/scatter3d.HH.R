@@ -19,8 +19,6 @@ function (x, y, z,
             groups = NULL, parallel = TRUE, model.summary = FALSE,
             squares=FALSE, square.color="gray", coef.ratio=1, ...)
 {
-    require(rgl)
-    require(mgcv)
     summaries <- list()
     if ((!is.null(groups)) && (nlevels(groups) > length(surface.col)))
         stop(sprintf(gettextRcmdr("Number of groups (%d) exceeds number of colors (%d)."),

@@ -1,6 +1,5 @@
 "scatterPlotMatrix.HH" <-
 function(){
-    require("car")
     initializeDialog(title=gettextRcmdr("Scatterplot Matrix (HH)"))
     variablesBox <- variableListBox(top, Numeric(), title=gettextRcmdr("Select variables (three or more)"),
         selectmode="multiple", initialSelection=NULL)

@@ -1,6 +1,5 @@
 "confidenceIntervalsPlot" <-
 function(){
-  require("lattice")
   initializeDialog(title=gettextRcmdr("Confidence Intervals in Simple Linear Regression"))
     variablesFrame <- tkframe(top)
     .numeric <- Numeric()

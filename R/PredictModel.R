@@ -1,6 +1,5 @@
 "PredictModel" <-
 function(){
-    require("abind")
     env <- environment()
     initializeDialog(title=gettextRcmdr("Enter X data for new observations"))
     confLevelVar <- tclVar(".95")

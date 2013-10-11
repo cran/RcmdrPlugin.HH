@@ -3,7 +3,6 @@ function()
   ## this function modified by Martin Maechler
   ## this function modified by Richard M. Heiberger to add Shapiro-Wilk test
 {
-    require("car")
     initializeDialog(title=gettextRcmdr("Quantile-Comparison (QQ) Plot"))
     xBox <- variableListBox(top, Numeric(), title=gettextRcmdr("Variable (pick one)"))
     onOK <- function(){

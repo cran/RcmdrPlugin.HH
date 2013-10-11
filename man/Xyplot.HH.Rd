@@ -13,6 +13,10 @@ between conditioning variables in the formula and group variables.
 functions (\code{xyplot}, \code{bwplot}, \code{splom},
 \code{barchart}, \code{dotplot}) and to the formula method for
 \code{likert} in the \code{HH} package.
+When either \code{barchart} or \code{panel.barchart} is selected, then the argument \code{origin=0} is
+automatically set.  When \code{panel.barchart}, the user must manually
+specify the limits (\code{xlim} or \code{ylim}) to include zero for the effect of \code{origin=0} to
+be visible.
 }
 \usage{
 Xyplot.HH()
