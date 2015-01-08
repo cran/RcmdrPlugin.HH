@@ -5,7 +5,7 @@
 
 \description{
   This dialog sets up a call to the \code{\link{scatter3dHH}} function to draw a
-  three-dimensional scatterplot, and optionally to \code{\link[car]{identify3d}} to label
+  three-dimensional scatterplot, and optionally to \code{\link[car]{Identify3d}} to label
   points interactively with the mouse.
 }
 
@@ -14,8 +14,8 @@ The explanatory variables provide the "horizontal" and "out-of-screen" axes of t
 the response variable provides the "vertical" axis.
 
 Data points are represented as spheres or points,
-depending upon the number of observations. 
-  
+depending upon the number of observations.
+
 Several regression surfaces can be
 plotted: a linear least-squares surface; a full quadratic least-squares surface
 with squared and cross-product terms; a "smooth" regression surface --- either a
@@ -32,28 +32,28 @@ residuals are plotted.  The sum of the area of these squares is the
 You can specify a factor defining groups by pressing the \emph{Plot by groups} button. A
 separate surface or set of surfaces is plotted for each level of the groups factor. These
 surfaces can be constrained to be parallel.
-  
+
 The completed plot can be manipulated with the mouse: Click, hold, drag the left mouse button to rotate
 the display; click, hold, and drag the right button (or centre button on a three-button mouse)
 to zoom in and out.
 
 If the box labelled \emph{Identify observations with mouse} is checked, you may use
 the mouse to identify points interactively: Press the right mouse button (or the centre button
-on a three-button mouse), drag a 
-rectangle around the points to be identified, and release the button. 
+on a three-button mouse), drag a
+rectangle around the points to be identified, and release the button.
 Repeat this procedure for each point or
 set of "nearby" points to be identified. To exit from point-identification mode,
 right-click (or centre-click) in an empty region of the plot.
 
 Points may also be identified subsequently by selecting \emph{Identify observations with mouse}
 from the R Commander \emph{3D graph} menu: As above, click and drag the left mouse button to
-rotate the display, and click and drag the right (or centre) button to identify points. 
+rotate the display, and click and drag the right (or centre) button to identify points.
 }
 
 \author{John Fox \email{jfox@mcmaster.ca}.  Squared residuals added by
   Richard M. Heiberger <rmh@temple.edu>.}
 
-\seealso{\code{\link{scatter3dHH}}, \code{\link[car]{identify3d}},  
+\seealso{\code{\link{scatter3dHH}}, \code{\link[car]{Identify3d}},
   \code{\link[rgl]{rgl.open}}, \code{\link[mgcv]{gam}}}
 
 \keyword{hplot}

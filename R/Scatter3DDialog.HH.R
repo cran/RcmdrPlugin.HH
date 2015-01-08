@@ -7,7 +7,7 @@ function(){
         initialSelection=NULL, listHeight=7)
     yBox <- variableListBox(variablesFrame, .numeric, title=gettextRcmdr("Response variable (pick one)"), listHeight=7)
     surfacesFrame <- tkframe(top)
-    identifyPoints <- tclVar("0") 
+    identifyPoints <- tclVar("0")
     identifyPointsCheckBox <- tkcheckbutton(surfacesFrame, variable=identifyPoints)
     gridLines <- tclVar("1")
     gridLinesCheckBox <- tkcheckbutton(surfacesFrame, variable=gridLines)
@@ -72,20 +72,20 @@ function(){
         bg <- tclvalue(bgVariable)
         resid <- tclvalue(residVariable)
         .activeDataSet <- ActiveDataSet()
-        if (.groups != FALSE){ 
+        if (.groups != FALSE){
             groups <- paste(", groups=", .activeDataSet, "$", .groups, sep="")
             parallel <- paste(", parallel=", .linesByGroup, sep="")
             }
         else groups <- parallel <- ""
         if (tclvalue(rglOpen) == 1) doItAndPrint("rgl.open()")
-        command <- paste("scatter3dHH(", .activeDataSet, "$", x[1], ", ", 
-            .activeDataSet, "$", y, ", ", .activeDataSet, "$", x[2], fit, dfNonpar, 
+        command <- paste("scatter3dHH(", .activeDataSet, "$", x[1], ", ",
+            .activeDataSet, "$", y, ", ", .activeDataSet, "$", x[2], fit, dfNonpar,
             dfAdd, groups, parallel, ', bg="', bg, '", grid=', grid,
                          ', squares=', resid=="square", betaMultiplier,
             ', xlab="', x[1], '", ylab="', y, '", zlab="', x[2], '")', sep="")
         doItAndPrint(command)
         putRcmdr("rgl", TRUE)
-        command <- paste("identify3d(", .activeDataSet, "$", x[1], ", ", 
+        command <- paste("Identify3d(", .activeDataSet, "$", x[1], ", ",
             .activeDataSet, "$", y, ", ", .activeDataSet, "$", x[2], groups,
             ", labels=row.names(", .activeDataSet, "))", sep="")
         putRcmdr("Identify3d", command)
@@ -111,13 +111,13 @@ function(){
     tkgrid(tklabel(surfacesFrame, text=gettextRcmdr("Quadratic least-squares")), quadLSCheckBox, sticky="w")
 
     dfLabel <- tklabel(surfacesFrame, text=gettextRcmdr("df = "))
-    tkgrid(tklabel(surfacesFrame, text=gettextRcmdr("Smooth regression")), nonparCheckBox, 
+    tkgrid(tklabel(surfacesFrame, text=gettextRcmdr("Smooth regression")), nonparCheckBox,
         dfLabel, dfNonparField, sticky="w")
     tkgrid.configure(dfLabel, sticky="e")
 
-    tkgrid(tklabel(surfacesFrame, text=gettextRcmdr("Additive regression")), additiveCheckBox, 
+    tkgrid(tklabel(surfacesFrame, text=gettextRcmdr("Additive regression")), additiveCheckBox,
         tklabel(surfacesFrame, text=gettextRcmdr("df(each term) = ")), dfAddField, sticky="w")
-    tkgrid(surfacesFrame, sticky="w") 
+    tkgrid(surfacesFrame, sticky="w")
     tkgrid(tklabel(bgFrame, text=gettextRcmdr("Background Color"), fg="blue"), sticky="w", columnspan=2)
     tkgrid(tklabel(bgFrame, text=gettextRcmdr("Black")), blackButton, sticky="w")
     tkgrid(tklabel(bgFrame, text=gettextRcmdr("White")), whiteButton, sticky="w")

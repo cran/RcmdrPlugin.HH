@@ -1,5 +1,5 @@
-7ae706628a2661bcec18a028808a2ffd *DESCRIPTION
-630085e4ba788b5366f5d4c103b0f238 *NAMESPACE
+6b98446ec2f0de400e6496983e145fc9 *DESCRIPTION
+95fcc9d0785309998f68f96b93dd1135 *NAMESPACE
 b85c0d042f2d917b046e2179aead20c1 *R/BoxCox.R
 e15ecacaace09ae6519c956e2959a5b7 *R/ChisqHypothesesPlot.R
 40f72b6e6523049d57fae0a95b0797ae *R/Dotplot.tb.R
@@ -15,7 +15,7 @@ a2036d88d67fe796465f9f01dbe02990 *R/QQPlot.HH.R
 0ce5eca386595a2e63690e0dede451d2 *R/R_options.R
 efb290a6f7abda6ffe404144f92d0281 *R/Regr1Plot.R
 9d04483218dcd9390c35d0ce5572744e *R/ResizeEtcDialog.R
-a4a476511f5b0ee58ba84aa5f6309c42 *R/Scatter3DDialog.HH.R
+17406236e83b81e5d27625eeb7a8a81a *R/Scatter3DDialog.HH.R
 49f528453b1d0dd80dbe2423f7f6ba95 *R/Xyplot.HH.R
 5c5c27f09022bf80f006ff722825e51e *R/analyzeTwoWayTable.HH.R
 b673e604f7e0a70828e3de28942af6d3 *R/anovaTableI.HH.R
@@ -45,7 +45,7 @@ adbc27e41fcda0e84efc9e32acba2d2e *man/Projector.Rd
 0cde5a812d8b0fefd40e84be9020c447 *man/Rcmdr.HH-package.Rd
 c67d36d1c591a91736b6c65b32672c3d *man/Regr1Plot.Rd
 ddb0e127260c30771a688dc0c71074a6 *man/ResizeEtcDialog.Rd
-47c58b4f8b072dcd020cae8242ad7616 *man/Scatter3DDialog.HH.Rd
+5580391e3051ea7cf5a1c6ddfad14748 *man/Scatter3DDialog.HH.Rd
 0856f7d16cbdee2bd21829ffecbd099a *man/Xyplot.HH.Rd
 c3b3f1d4fac878dbdaac826159598cbe *man/anovaTableI.HH.Rd
 c062caf275383713112cfb1d951ba79f *man/bestSubsetsRegressionModel.HH.Rd
@@ -53,7 +53,7 @@ c062caf275383713112cfb1d951ba79f *man/bestSubsetsRegressionModel.HH.Rd
 2f4138f3809a91a0667d7f1e4016eae1 *man/latticeFunctions.Rd
 c8da4005e150806963fbb95f9fc7360e *man/likert.Rd
 75359f0de41eef5e22895b27b3dc782d *man/normalHypothesesPlot.Rd
-87de4f0b97c69d463ce7ebada564f301 *man/scatter3d.HH.Rd
+ffdaf1ecdc134453631a8aa8cda9d5e5 *man/scatter3d.HH.Rd
 9354e6c4b7c7d22c70a0452f1c53681c *man/scatterPlot.HH.Rd
 ddb48264c0c326771c8337d5b4371473 *man/scatterPlotMatrix.HH.Rd
 a8aab75e76ef09e5f719c4dec0429cf2 *man/twoWayTable.HH.Rd
