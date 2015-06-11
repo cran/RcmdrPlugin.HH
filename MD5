@@ -1,5 +1,5 @@
-6b98446ec2f0de400e6496983e145fc9 *DESCRIPTION
-95fcc9d0785309998f68f96b93dd1135 *NAMESPACE
+313f9eed762f4947478ee04cdcda4519 *DESCRIPTION
+4c4ebc2183cc01b4c36d3671855f7dc7 *NAMESPACE
 b85c0d042f2d917b046e2179aead20c1 *R/BoxCox.R
 e15ecacaace09ae6519c956e2959a5b7 *R/ChisqHypothesesPlot.R
 40f72b6e6523049d57fae0a95b0797ae *R/Dotplot.tb.R
@@ -20,7 +20,7 @@ efb290a6f7abda6ffe404144f92d0281 *R/Regr1Plot.R
 5c5c27f09022bf80f006ff722825e51e *R/analyzeTwoWayTable.HH.R
 b673e604f7e0a70828e3de28942af6d3 *R/anovaTableI.HH.R
 02bfbe2f22d4ce3d8bc4487b49c1769b *R/anovaTableII.R
-1bf7fe137f9fd547bc26eaaf5df46e0b *R/bestSubsetsRegressionModel.HH.R
+41707d1eaac29336127d0dc8739ee981 *R/bestSubsetsRegressionModel.HH.R
 f8f6c1b9242b6481e9becfa86c173f8f *R/closeRcmdr.R
 aa682473bb4ea8b04bdcc2fce513d00c *R/confidenceIntervalsPlot.R
 d732aa4bdcba215387f556795e090489 *R/enterTable.HH.R

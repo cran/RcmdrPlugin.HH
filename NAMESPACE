@@ -2,13 +2,87 @@
 
 exportPattern(".")
 
-import(rgl)
+##import(rgl)
 ##importFrom(rgl, rgl.clear, rgl.bringtotop, rgl.cur)
-import(Rcmdr)
-import(HH)
-import(lattice)
-import(latticeExtra)
-importFrom(tcltk, tkbutton)
+
+## import(Rcmdr)
+importFrom(Rcmdr,
+           initializeDialog,
+           variableListBox,
+           getSelection,
+           errorCondition,
+           closeDialog,
+           doItAndPrint,
+           OKCancelHelp,
+           dialogSuffix,
+           closeCommander,
+           Commander,
+           Numeric,
+           ActiveDataSet,
+           CommanderWindow,
+           getFrame,
+           gettextRcmdr,
+           justDoIt,
+           logger,
+           getRcmdr,
+           Factors,
+           activateMenus,
+           putRcmdr,
+           checkBoxes,
+           radioButtons,
+           putDialog,
+           listAOVModels,
+           Library,
+           getDialog,
+           ActiveModel,
+           activeModel,
+           activeDataSet,
+           Message,
+           subsetBox,
+           trim.blanks,
+           tkradiobutton,
+           .Tcl,
+           groupsBox,
+           varPosn,
+           Variables,
+           checkMethod,
+           UpdateModelNumber,
+           is.valid.name,
+           listLinearModels,
+           checkReplace,
+           RcmdrTkmessageBox,
+           MacOSXP,
+           labelRcmdr,
+           TwoLevelFactors
+           )
+
+## import(HH)
+importFrom(HH, is.likertCapable)
+
+importFrom(lattice,
+           trellis.par.set,
+           trellis.par.get)
+## import(latticeExtra)
+importFrom(tcltk,
+           tkbutton,
+           tkgrid,
+           tclVar,
+           tkentry,
+           tclvalue,
+           tkfocus,
+           tklabel,
+           tkgrid.configure,
+           tkframe,
+           tkcheckbutton,
+           tkdestroy,
+           tkscale,
+           tkscrollbar,
+           tkxview,
+           tkconfigure,
+           tkset,
+           ttkentry,
+           ttkscrollbar
+           )
 ##importFrom(leaps)
 ##importFrom(multcomp)
 importFrom(mgcv, gam)

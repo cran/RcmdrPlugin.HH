@@ -3,7 +3,7 @@ function(){
     initializeDialog(title=gettextRcmdr("Best Subsets Regression"))
     variablesFrame <- tkframe(top)
     .numeric <- Numeric()
-    xBox <- variableListBox(variablesFrame, .numeric, selectmode="multiple", 
+    xBox <- variableListBox(variablesFrame, .numeric, selectmode="multiple",
         title=gettextRcmdr("Explanatory variables (pick one or more)"), listHeight=7)
     yBox <- variableListBox(variablesFrame, .numeric, title=gettextRcmdr("Response variable (pick one)"), listHeight=7)
     UpdateModelNumber()
@@ -17,9 +17,9 @@ function(){
     nbest <- tkentry(nbestFrame, width="3", textvariable=nbestName)
 
     radioButtons(name="statistic",
-                 buttons=c("rsq", "rss", "adjr2", "cp", "bic", "stderr"), 
+                 buttons=c("rsq", "rss", "adjr2", "cp", "bic", "stderr"),
                  values=c("rsq", "rss", "adjr2", "cp", "bic", "stderr"),
-                 initialValue="adjr2", 
+                 initialValue="adjr2",
                  labels=gettextRcmdr(c("R Square", "Residual Sum of Squares",
                    "Adjusted R^2", "Cp", "BIC", "Standard Error")),
                  title=gettextRcmdr("Statistic to plot"))
@@ -37,7 +37,7 @@ function(){
             UpdateModelNumber(-1)
             errorCondition(recall=bestSubsetsRegressionModel.HH, message=gettextRcmdr("No explanatory variables selected."))
             return()
-            }        
+            }
         if (is.element(y, x)) {
             UpdateModelNumber(-1)
             errorCondition(recall=bestSubsetsRegressionModel.HH, message=gettextRcmdr("Response and explanatory variables must be different."))
@@ -80,7 +80,7 @@ function(){
                          ")", sep="")
         justDoIt(paste(subsetsValue, " <- ", command, sep=""))
 
-        command <- paste("summary_HH(", subsetsValue, ")", sep="")
+        command <- paste("summaryHH(", subsetsValue, ")", sep="")
         summaryValue <- paste(subsetsValue, "Summary", sep=".")
         justDoIt(paste(summaryValue, " <- ", command, sep=""))
         ## summaries <-
@@ -89,7 +89,7 @@ function(){
         command <- paste("plot(", summaryValue, ", statistic='", statisticValue, "', legend=FALSE)", sep="")
         logger(command)
         justDoIt(command)
-        
+
         bringToTop()
         .nmax <- attr(get(summaryValue, envir=.GlobalEnv), "n.max.adjr2")
         ## .nmax <- attr(summaries, "n.max.adjr2")
@@ -106,7 +106,7 @@ function(){
     tkgrid(tklabel(modelFrame, text=gettextRcmdr("Enter name for model:")), model, sticky="w")
     tkgrid(modelFrame, sticky="w")
     tkgrid(getFrame(yBox), tklabel(variablesFrame, text="    "), getFrame(xBox), sticky="nw")
-    tkgrid(variablesFrame, sticky="w")    
+    tkgrid(variablesFrame, sticky="w")
 
     tkgrid(tklabel(nbestFrame, text=gettextRcmdr("Number of subsets of each size to record:")), nbest, sticky="w")
     tkgrid(nbestFrame, sticky="w")
