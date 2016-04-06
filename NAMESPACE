@@ -86,3 +86,7 @@ importFrom(tcltk,
 ##importFrom(leaps)
 ##importFrom(multcomp)
 importFrom(mgcv, gam)
+  importFrom("grDevices", "bringToTop")
+  importFrom("graphics", "par")
+  importFrom("stats", "as.formula", "complete.cases", "lm", "na.omit",
+             "predict", "resid")
