@@ -74,11 +74,11 @@ function(){
             }
         statisticValue <- tclvalue(statisticVariable)
 
-        command <- paste("regsubsets(", y, "~", paste(x, collapse="+"),
+        command <- paste("leaps::regsubsets(", y, "~", paste(x, collapse="+"),
                          ", data=", ActiveDataSet(), subset,
                          ", nbest=", nbestValue,
                          ")", sep="")
-        justDoIt(paste(subsetsValue, " <- ", command, sep=""))
+        doItAndPrint(paste(subsetsValue, " <- ", command, sep=""))
 
         command <- paste("summaryHH(", subsetsValue, ")", sep="")
         summaryValue <- paste(subsetsValue, "Summary", sep=".")
@@ -90,7 +90,8 @@ function(){
         logger(command)
         justDoIt(command)
 
-        bringToTop()
+##        bringToTop()
+        if (version$os == "mingw32") justDoIt("bringToTop()")
         .nmax <- attr(get(summaryValue, envir=.GlobalEnv), "n.max.adjr2")
         ## .nmax <- attr(summaries, "n.max.adjr2")
         modelValue <- paste(trim.blanks(tclvalue(modelName)), .nmax, sep=".")
