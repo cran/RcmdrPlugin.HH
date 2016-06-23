@@ -1,5 +1,6 @@
 "Scatter3DDialog.HH" <-
 function(){
+    if (!("rgl" %in% .packages())) doItAndPrint("library(rgl)")
     initializeDialog(title=gettextRcmdr("3D Scatterplot"))
     variablesFrame <- tkframe(top)
     .numeric <- Numeric()
