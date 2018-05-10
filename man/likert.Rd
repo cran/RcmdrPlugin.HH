@@ -26,17 +26,17 @@ varPosnOriginal(variables, type = c("all", "factor", "numeric", "nonfactor",
   See \code{\link[HH]{likert}} for details on what objects are likert capable.
 
   \code{LikertFormulaConstruct} constructs a model formula for use by
-  \code{\link[HH]{plot.likert.formula}} from its
+  \code{\link[HH:likert]{plot.likert.formula}} from its
   input arguments.
 
-  \code{varPosnOriginal} is the same as \code{\link[Rcmdr]{varPosn}}
+  \code{varPosnOriginal} is the same as \code{\link[Rcmdr:Rcmdr.Utilities]{varPosn}}
   except that it always keeps the variables in the same order as the
   original data.frame.
 }
 \arguments{
   \item{envir, \dots}{Arguments to \code{\link[base]{ls}}.}
   \item{functionName, response, predictor}{Arguments to functions.}
-  \item{variables, type}{See \code{\link[Rcmdr]{varPosn}} for discussion.}
+  \item{variables, type}{See \code{\link[Rcmdr:Rcmdr.Utilities]{varPosn}} for discussion.}
 }
 \author{ Richard M. Heiberger <rmh@temple.edu> }
 \seealso{\code{\link[HH]{likert}}}

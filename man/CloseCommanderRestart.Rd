@@ -16,5 +16,5 @@ CloseCommanderRestart()
 }
 %- maybe also 'usage' for other objects documented here.
 \author{ Richard M. Heiberger <rmh@temple.edu> }
-\seealso{\code{\link[Rcmdr]{closeCommander}}}
+\seealso{\code{\link[Rcmdr:Rcmdr.Utilities]{closeCommander}}}
 \keyword{misc}

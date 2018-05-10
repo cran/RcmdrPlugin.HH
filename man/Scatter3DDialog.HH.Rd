@@ -5,7 +5,7 @@
 
 \description{
   This dialog sets up a call to the \code{\link{scatter3dHH}} function to draw a
-  three-dimensional scatterplot, and optionally to \code{\link[car]{Identify3d}} to label
+  three-dimensional scatterplot, and optionally to \code{\link[car:scatter3d]{Identify3d}} to label
   points interactively with the mouse.
 }
 
@@ -53,7 +53,7 @@ rotate the display, and click and drag the right (or centre) button to identify 
 \author{John Fox \email{jfox@mcmaster.ca}.  Squared residuals added by
   Richard M. Heiberger <rmh@temple.edu>.}
 
-\seealso{\code{\link{scatter3dHH}}, \code{\link[car]{Identify3d}},
+\seealso{\code{\link{scatter3dHH}}, \code{\link[car:scatter3d]{Identify3d}},
   \code{\link[rgl]{rgl.open}}, \code{\link[mgcv]{gam}}}
 
 \keyword{hplot}

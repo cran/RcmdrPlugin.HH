@@ -22,5 +22,5 @@ ChisqHypothesesPlot()
 }
 %- maybe also 'usage' for other objects documented here.
 \author{Richard M. Heiberger <rmh@temple.edu>.}
-\seealso{\code{\link[HH]{norm.curve}}, \code{\link[HH]{F.curve}}, \code{\link[HH]{chisq.curve}}}
+\seealso{\code{\link[HH]{norm.curve}}, \code{\link[HH]{F.curve}}, \code{\link[HH:F.curve]{chisq.curve}}}
 \keyword{hplot}

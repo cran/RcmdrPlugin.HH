@@ -52,7 +52,7 @@ simple linear regression.
 interactions in a multifactor design.
 
 \code{\link{scatterPlotMatrix.HH}} Similar to
-\code{\link[car]{scatterplot.matrix}}
+\code{\link[car]{scatterplotMatrix}}
   The revision uses \code{row1attop=FALSE} to force the main diagonal of
   the scatterplot matrix to go uphill from southwest to northeast.
 
@@ -78,7 +78,7 @@ Heiberger, Richard M. and Holland, Burt (2004b).
 }
 \keyword{ package }
 \seealso{
-\code{\link[Rcmdr]{Rcmdr}}
+\code{\link[Rcmdr:Rcmdr-package]{Rcmdr}}
 }
 
 \examples{

@@ -1,8 +1,8 @@
 Package: RcmdrPlugin.HH
 Type: Package
 Title: Rcmdr Support for the HH Package
-Version: 1.1-46
-Date: 2016-06-22
+Version: 1.1-47
+Date: 2018-09-09
 Author: Richard M. Heiberger, with contributions from Burt Holland
 Maintainer: Richard M. Heiberger <rmh@temple.edu>
 Depends: R (>= 3.0.2), HH
@@ -12,6 +12,6 @@ Description: Rcmdr menu support for many of the functions in the HH package.
         courses.
 License: GPL (>= 2)
 NeedsCompilation: no
-Packaged: 2016-06-22 18:30:36 UTC; rmh
+Packaged: 2018-05-10 02:57:06 UTC; rmh
 Repository: CRAN
-Date/Publication: 2016-06-23 00:58:10
+Date/Publication: 2018-05-10 06:26:43 UTC

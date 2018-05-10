@@ -9,7 +9,7 @@ function()
         x <- getSelection(xBox)
         closeDialog()
        if (0 == length(x)) {
-            errorCondition(recall=QQPlot.HH, message=gettextRcmdr("You must select a variable.")) 
+            errorCondition(recall=QQPlot.HH, message=gettextRcmdr("You must select a variable."))
             return()
             }
         dist <- tclvalue(distVariable)
@@ -50,7 +50,7 @@ function()
                    if (is.na(df.num1) || df.num1 < 1 ||
                        is.na(df.num2) || df.num2 < 1) {
                        retryMe(gettextRcmdr("numerator and denominator \ndf for F must be positive numbers."))
-                       return()                            
+                       return()
                    }
                    args <- paste('dist="f", df1=', df1, ', df2=', df2, sep="")
                },
@@ -65,7 +65,7 @@ function()
             if ("1" == tclvalue(identifyVariable))
                 paste("rownames(", .activeDataSet, ")", sep="")
             else "FALSE"
-        command <- paste("qq.plot", "(", .activeDataSet, "$", x, ", ", args,
+        command <- paste("qqPlot", "(", .activeDataSet, "$", x, ", ", args,
                           ", labels=", labels, ")", sep="")
         command2 <- paste("shapiro.test", "(", .activeDataSet, "$", x, ")", sep="")
         doItAndPrint(command)
@@ -73,7 +73,7 @@ function()
         activateMenus()
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject="qq.plot")
+    OKCancelHelp(helpSubject="qqPlot")
     distFrame <- tkframe(top)
     distVariable <- tclVar("norm")
     normalButton <- tkradiobutton(distFrame, variable=distVariable, value="norm")

@@ -13,7 +13,7 @@ QQPlot.HH()
   The \code{normal} gives the option to do the Shapiro-Wilk test of normality.
   The \code{other} requires you to specify the distribution.
   Any distribution for which quantile and density functions exist in
-  R (with prefixes \code{q} and \code{d}, respectively) may be used. 
+  R (with prefixes \code{q} and \code{d}, respectively) may be used.
 }
 \value{
 \code{NULL}. These functions are used only for their side effect (to
@@ -21,6 +21,6 @@ QQPlot.HH()
 }
 \author{John Fox \email{jfox@mcmaster.ca}.
   Shapiro--Wilk test added by Richard M. Heiberger <rmh@temple.edu>.}
-\seealso{\code{\link[car]{qq.plot}}, \code{\link[stats]{shapiro.test}}}
+\seealso{\code{\link[car]{qqPlot}}, \code{\link[stats]{shapiro.test}}}
 \keyword{ hplot }
 \keyword{ distribution }
